@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import useProfileStore from "../hooks/useProfileStore";
+import useProfileStore from "@/hooks/useProfileStore";
 
 export default function ProfileForm() {
   const { profile, setProfile } = useProfileStore();

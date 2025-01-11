@@ -85,15 +85,37 @@ public class ChatGptService {
                 .orElseThrow(() -> new RuntimeException("EmailResponse with id " + id + " not found."));
     }
 
+    private String getEtiquetteGuidance(String language) {
+        switch (language.toLowerCase()) {
+            case "english":
+                return "Please compose the email in English only.";
+            case "korean":
+                return "이메일을 한국어로만 작성해주세요.";
+            case "japanese":
+                return "メールを日本語でのみ作成してください。";
+            case "chinese":
+                return "请仅使用中文撰写邮件。";
+            case "french":
+                return "Veuillez rédiger l'email uniquement en français.";
+            case "german":
+                return "Bitte verfassen Sie die E-Mail ausschließlich auf Deutsch.";
+            default:
+                return "Please compose the email in the specified language only.";
+        }
+    }
+
     private String createPrompt(EmailRequest emailRequest) {
+        String etiquetteGuidance = getEtiquetteGuidance(emailRequest.getLanguage());
         return String.format(
-                "Create a professional email for the following situation:\n" +
+                "Create a professional email in %s language following this etiquette: %s\n" +
                         "From: %s (%s, %s, %s)\n" +
                         "To: %s (%s)\n" +
                         "Situation: %s\n" +
                         "Expected Reply: %s\n" +
                         "Tone: %s" +
-                        "The email should avoid including any subject line or additional metadata.",
+                        "The email should avoid including any subject line or additional metadata, or sender's phone number.",
+                emailRequest.getLanguage(),
+                etiquetteGuidance,
                 emailRequest.getForm1().getName(),
                 emailRequest.getForm1().getAffiliation(),
                 emailRequest.getForm1().getNumber(),
@@ -107,7 +129,8 @@ public class ChatGptService {
     }
 
     private String createTitle(EmailRequest emailRequest) {
-        return String.format("[%s] %s",
+        return String.format(
+                "[%s] %s",
                 emailRequest.getForm1().getAffiliation(),
                 emailRequest.getForm3().getSituation()
         );

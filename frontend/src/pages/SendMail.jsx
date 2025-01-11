@@ -1,15 +1,11 @@
 import { useState } from "react";
-import ProfileSelect from "@/components/ProfileSelect/ProfileSelect";
+import Form1Picker from "@/components/Form1Picker/Form1Picker";
+import Form2Picker from "@/components/Form2Picker/Form2Picker";
+import Form3Picker from "@/components/Form3Picker/Form3Picker";
+import Form4Picker from "@/components/Form4Picker/Form4Picker";
 import ProgressBar from "@/components/ProgressBar/ProgressBar";
 import PageNavigation from "@/components/PageNavigation/PageNavigation";
-import RecipientPicker from "@/components/SelectReciever/RecipientPicker";
 import "@/styles/SendMail.css";
-
-// RecipientPicker
-
-const Comp2 = () => <div>Comp2 Content</div>;
-const Comp3 = () => <div>Comp3 Content</div>;
-const Comp4 = () => <div>Comp4 Content</div>;
 
 export default function SendMail() {
   const totalPages = 4;
@@ -45,13 +41,13 @@ export default function SendMail() {
   const renderPage = () => {
     switch (currentPage) {
       case 0:
-        return <ProfileSelect />;
+        return <Form1Picker />;
       case 1:
-        return <RecipientPicker />;
+        return <Form2Picker />;
       case 2:
-        return <Comp3 />;
+        return <Form3Picker />;
       case 3:
-        return <Comp4 />;
+        return <Form4Picker />;
       default:
         return null;
     }

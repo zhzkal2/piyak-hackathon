@@ -4,19 +4,27 @@ import { persist } from "zustand/middleware";
 const useProfileStore = create(
   persist(
     (set) => ({
-      profile: {
-        name: "",
-        gender: "",
-        age: "",
-        email: "",
-      },
-      setProfile: (data) =>
+      profiles: [], // 여러 프로필을 저장하는 배열
+      addProfile: (profile) =>
         set((state) => ({
-          profile: { ...state.profile, ...data },
+          profiles: [...state.profiles, profile], // 새로운 프로필 추가
+        })),
+      updateProfile: (index, updatedProfile) =>
+        set((state) => {
+          const updatedProfiles = [...state.profiles];
+          updatedProfiles[index] = {
+            ...updatedProfiles[index],
+            ...updatedProfile,
+          };
+          return { profiles: updatedProfiles };
+        }),
+      deleteProfile: (index) =>
+        set((state) => ({
+          profiles: state.profiles.filter((_, i) => i !== index), // 특정 프로필 삭제
         })),
     }),
     {
-      name: "profile-storage",
+      name: "profiles-storage", // localStorage 키 이름
     }
   )
 );

@@ -91,7 +91,7 @@ export default function Form4Picker() {
             <strong>{generatedData.generatedTitle}</strong>
           </div>
           <p className="recipient">
-            받는 사람 <span>{generatedData.recipientMail}</span>
+            받는 사람 <span>{"<"}{generatedData.recipientMail}{">"}</span>
           </p>
           <div className="generated-content">
             {generatedData.generatedContent.split("\n").map((line, index) => (

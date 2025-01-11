@@ -85,7 +85,7 @@ export default function Form3Picker() {
     <div className="form3-picker-container">
       <h3>* 어떤 상황인가요?</h3>
       <textarea
-        placeholder="상황을 입력해주세요"
+        placeholder="내용을 입력하세요"
         value={formData.situation}
         onChange={(e) =>
           setFormData((prev) => ({ ...prev, situation: e.target.value }))
@@ -95,12 +95,13 @@ export default function Form3Picker() {
 
       <h3>원하는 답변</h3>
       <textarea
-        placeholder="원하는 답변을 입력해주세요"
+        placeholder="내용을 입력해주세요"
         value={formData.desiredAnswer}
         onChange={(e) =>
           setFormData((prev) => ({ ...prev, desiredAnswer: e.target.value }))
         }
         className="form3-textarea"
+        style={{ height: "3rem" }}
       />
 
       <h3>언어</h3>

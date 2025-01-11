@@ -22,6 +22,9 @@ public class EmailResponse {
     @Column(name = "generated_content", nullable = false, columnDefinition = "TEXT")
     private String generatedContent;
 
+    @Column(name = "recipient_mail", nullable = false, length = 255)
+    private String recipientMail;
+
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 

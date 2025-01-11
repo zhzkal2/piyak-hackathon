@@ -159,6 +159,7 @@ public class OauthService {
     // 사용자 정보를 파싱하여 User 객체 생성
     private User parseUserInfo(String userInfo, SocialLoginType socialLoginType,
                                String accessToken) {
+
         JsonObject jsonObject = JsonParser.parseString(userInfo).getAsJsonObject();
 
         log.info("parseUserInfo :"+ jsonObject);

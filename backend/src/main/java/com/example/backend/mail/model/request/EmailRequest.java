@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+@Setter
 @Data
 @Setter
 @Getter

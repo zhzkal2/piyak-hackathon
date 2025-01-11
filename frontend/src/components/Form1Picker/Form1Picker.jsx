@@ -1,9 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import useProfileStore from "@/hooks/useProfileStore";
-import "./ProfileSelect.css";
+import "./Form1Picker.css";
 
-export default function ProfileSelect() {
-  const { profiles } = useProfileStore();
+export default function Form1Picker() {
+  const { profiles } = useProfileStore(); // zustand의 profiles 상태 가져오기
+  console.log(profiles);
 
   const initialProfile = {
     name: "",
@@ -20,19 +21,12 @@ export default function ProfileSelect() {
     number: false,
   }); // 선택된 항목 저장
 
-  // LocalStorage에서 데이터 가져오기
-  useEffect(() => {
-    const savedData = JSON.parse(localStorage.getItem("save-form1"));
-    if (savedData) {
-      setSelectedProfile((prev) => ({ ...prev, ...savedData }));
-    }
-  }, []);
-
+  // 프로필 선택 핸들러
   const handleSelectProfile = (profile) => {
     setSelectedProfile(profile); // 선택된 프로필 업데이트
-    localStorage.removeItem("save-form1"); // LocalStorage에서 save-form1 삭제
   };
 
+  // 체크박스 상태 업데이트 핸들러
   const handleCheckboxChange = (field) => {
     setSelectedFields((prev) => ({
       ...prev,
@@ -40,17 +34,23 @@ export default function ProfileSelect() {
     }));
   };
 
-  const handleNext = () => {
+  // LocalStorage에 선택된 데이터를 저장
+  const saveDataToLocalStorage = useCallback(() => {
     const dataToSave = {};
-
-    // 모든 필드에 대해 체크된 경우 값을 저장하고, 체크되지 않은 경우 null 저장
     Object.keys(selectedFields).forEach((key) => {
-      dataToSave[key] = selectedFields[key] ? selectedProfile[key] : null;
+      dataToSave[key] = selectedFields[key] ? selectedProfile[key] : null; // 선택된 필드만 저장
     });
 
     localStorage.setItem("save-form1", JSON.stringify(dataToSave));
-    alert("선택된 항목이 저장되었습니다.");
-  };
+    console.log("save-form1에 데이터가 저장되었습니다.", dataToSave);
+  }, [selectedFields, selectedProfile]);
+
+  // 언마운트될 때 LocalStorage에 저장
+  useEffect(() => {
+    return () => {
+      saveDataToLocalStorage(); // 컴포넌트 언마운트 시 호출
+    };
+  }, [saveDataToLocalStorage]);
 
   return (
     <div className="profile-select-container">
@@ -60,7 +60,7 @@ export default function ProfileSelect() {
           profiles.map((profile, index) => (
             <div
               key={index}
-              onClick={() => handleSelectProfile(profile)} // 클릭 시 선택된 프로필 업데이트 및 LocalStorage 초기화
+              onClick={() => handleSelectProfile(profile)} // 클릭 시 선택된 프로필 업데이트
               style={{
                 cursor: "pointer",
                 border: "1px solid #ccc",
@@ -96,8 +96,8 @@ export default function ProfileSelect() {
           <label>
             <input
               type="checkbox"
-              checked={selectedFields.myName}
-              onChange={() => handleCheckboxChange("myName")}
+              checked={selectedFields.name}
+              onChange={() => handleCheckboxChange("name")}
             />
             <strong>이름:</strong> {selectedProfile.name}
           </label>
@@ -105,8 +105,8 @@ export default function ProfileSelect() {
           <label>
             <input
               type="checkbox"
-              checked={selectedFields.myJob}
-              onChange={() => handleCheckboxChange("myJob")}
+              checked={selectedFields.job}
+              onChange={() => handleCheckboxChange("job")}
             />
             <strong>직업:</strong> {selectedProfile.job}
           </label>
@@ -114,8 +114,8 @@ export default function ProfileSelect() {
           <label>
             <input
               type="checkbox"
-              checked={selectedFields.myAffiliation}
-              onChange={() => handleCheckboxChange("myAffiliation")}
+              checked={selectedFields.affiliation}
+              onChange={() => handleCheckboxChange("affiliation")}
             />
             <strong>소속:</strong> {selectedProfile.affiliation}
           </label>
@@ -123,23 +123,13 @@ export default function ProfileSelect() {
           <label>
             <input
               type="checkbox"
-              checked={selectedFields.myStuNum}
-              onChange={() => handleCheckboxChange("myStuNum")}
+              checked={selectedFields.number}
+              onChange={() => handleCheckboxChange("number")}
             />
             <strong>학번:</strong> {selectedProfile.number}
           </label>
         </div>
       </div>
-      <button
-        onClick={handleNext}
-        style={{
-          marginTop: "10px",
-          padding: "10px 20px",
-          cursor: "pointer",
-        }}
-      >
-        저장
-      </button>
     </div>
   );
 }

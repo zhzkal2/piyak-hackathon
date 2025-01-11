@@ -1,10 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import useProfileStore from "@/hooks/useProfileStore";
 
 export default function ProfileForm() {
-  const { addProfile } = useProfileStore(); // 새로운 프로필 추가 함수 가져오기
+  const { profiles, addProfile } = useProfileStore(); // 새로운 프로필 추가 함수 가져오기
 
-  // 폼의 초기값 설정
   const initialProfile = {
     name: "",
     job: "",
@@ -14,11 +13,12 @@ export default function ProfileForm() {
 
   const [formData, setFormData] = useState(initialProfile);
 
-  // 폼 제출 핸들러
+  useEffect(() => {
+    console.log(profiles);
+  }, [profiles]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    // 빈 필드가 있는지 확인
     if (
       !formData.name ||
       !formData.job ||
@@ -28,17 +28,11 @@ export default function ProfileForm() {
       alert("모든 필드를 채워주세요!");
       return;
     }
-
-    // 새로운 프로필 추가
     addProfile(formData);
-
-    // 폼 초기화
     setFormData(initialProfile);
-
     alert("새로운 프로필이 저장되었습니다.");
   };
 
-  // 입력 값 변경 핸들러
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));

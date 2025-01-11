@@ -1,34 +1,53 @@
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import useRecipientStore from "@/hooks/useRecipientStore";
-import "./RecipientPicker.css";
+import "./Form2Picker.css";
 
-function RecipientInputField({ label, type, required, onChange }) {
+function RecipientInputField({ label, type, value, required, onChange }) {
   return (
     <div className="recipientInputField">
       <label className={required ? "labelRequired" : ""}>{label}</label>
-      <input type={type} required={required} onChange={onChange} />
+      <input
+        type={type}
+        value={value}
+        required={required}
+        onChange={onChange}
+      />
     </div>
   );
 }
 
-export default function RecipientPicker() {
+export default function Form2Picker() {
   const { setRecipient } = useRecipientStore();
   const [recipientData, setRecipientData] = useState({
     recipientName: "",
     recipientMail: "",
-    fileToSend: "",
   });
 
-  const handleSave = () => {
-    // save-form2에 데이터 저장
+  // 마운트 시 LocalStorage에서 데이터 가져오기
+  useEffect(() => {
+    const savedData = JSON.parse(localStorage.getItem("save-form2"));
+    if (savedData) {
+      setRecipientData(savedData); // 저장된 데이터를 상태에 반영
+    }
+  }, []);
+
+  // 데이터를 LocalStorage에 저장하는 함수
+  const saveDataToLocalStorage = useCallback(() => {
     localStorage.setItem("save-form2", JSON.stringify(recipientData));
-    alert("데이터가 저장되었습니다.");
-  };
+    console.log("save-form2에 데이터가 저장되었습니다.", recipientData);
+  }, [recipientData]);
 
   const handleChange = (field, value) => {
     setRecipientData((prev) => ({ ...prev, [field]: value }));
     setRecipient({ [field]: value }); // zustand 상태 업데이트 (선택 사항)
   };
+
+  // 언마운트될 때 데이터 저장
+  useEffect(() => {
+    return () => {
+      saveDataToLocalStorage(); // 컴포넌트 언마운트 시 호출
+    };
+  }, [saveDataToLocalStorage]);
 
   return (
     <div id="recipientPicker">
@@ -39,36 +58,18 @@ export default function RecipientPicker() {
         <RecipientInputField
           label="이름"
           type="text"
+          value={recipientData.recipientName}
           required={true}
           onChange={(e) => handleChange("recipientName", e.target.value)}
         />
         <RecipientInputField
           label="메일주소"
           type="email"
+          value={recipientData.recipientMail}
           required={true}
           onChange={(e) => handleChange("recipientMail", e.target.value)}
         />
-        {/* <RecipientInputField
-          label="파일 첨부"
-          type="file"
-          required={false}
-          onChange={(e) => handleChange("fileToSend", e.target.value)}
-        /> */}
       </section>
-      <button
-        onClick={handleSave}
-        style={{
-          marginTop: "20px",
-          padding: "10px 20px",
-          backgroundColor: "#4caf50",
-          color: "#fff",
-          border: "none",
-          borderRadius: "5px",
-          cursor: "pointer",
-        }}
-      >
-        저장
-      </button>
     </div>
   );
 }

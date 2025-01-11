@@ -1,6 +1,5 @@
 package com.example.backend.mail.model.request;
 
-import com.example.backend.folders.model.request.RequestData;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;

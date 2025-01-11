@@ -2,7 +2,10 @@ import { useState } from "react";
 import ProfileSelect from "@/components/ProfileSelect/ProfileSelect";
 import ProgressBar from "@/components/ProgressBar/ProgressBar";
 import PageNavigation from "@/components/PageNavigation/PageNavigation";
+import RecipientPicker from "@/components/SelectReciever/RecipientPicker";
 import "@/styles/SendMail.css";
+
+// RecipientPicker
 
 const Comp2 = () => <div>Comp2 Content</div>;
 const Comp3 = () => <div>Comp3 Content</div>;
@@ -44,7 +47,7 @@ export default function SendMail() {
       case 0:
         return <ProfileSelect />;
       case 1:
-        return <Comp2 />;
+        return <RecipientPicker />;
       case 2:
         return <Comp3 />;
       case 3:

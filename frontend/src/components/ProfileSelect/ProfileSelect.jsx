@@ -6,18 +6,18 @@ export default function ProfileSelect() {
   const { profiles } = useProfileStore();
 
   const initialProfile = {
-    name: "이름",
-    gender: "성별",
-    age: "나이",
-    email: "보낼 이메일",
+    name: "",
+    job: "",
+    affiliation: "",
+    number: "",
   }; // 기본값 설정
 
   const [selectedProfile, setSelectedProfile] = useState(initialProfile); // 선택된 프로필 저장
   const [selectedFields, setSelectedFields] = useState({
     name: false,
-    gender: false,
-    age: false,
-    email: false,
+    job: false,
+    affiliation: false,
+    number: false,
   }); // 선택된 항목 저장
 
   // LocalStorage에서 데이터 가져오기
@@ -42,11 +42,12 @@ export default function ProfileSelect() {
 
   const handleNext = () => {
     const dataToSave = {};
+
+    // 모든 필드에 대해 체크된 경우 값을 저장하고, 체크되지 않은 경우 null 저장
     Object.keys(selectedFields).forEach((key) => {
-      if (selectedFields[key]) {
-        dataToSave[key] = selectedProfile[key]; // 선택된 항목만 저장
-      }
+      dataToSave[key] = selectedFields[key] ? selectedProfile[key] : null;
     });
+
     localStorage.setItem("save-form1", JSON.stringify(dataToSave));
     alert("선택된 항목이 저장되었습니다.");
   };
@@ -74,13 +75,13 @@ export default function ProfileSelect() {
                 <strong>이름:</strong> {profile.name || "정보 없음"}
               </p>
               <p>
-                <strong>성별:</strong> {profile.gender || "정보 없음"}
+                <strong>직업:</strong> {profile.job || "정보 없음"}
               </p>
               <p>
-                <strong>나이(만):</strong> {profile.age || "정보 없음"}
+                <strong>소속:</strong> {profile.affiliation || "정보 없음"}
               </p>
               <p>
-                <strong>보낼 이메일:</strong> {profile.email || "정보 없음"}
+                <strong>학번:</strong> {profile.number || "정보 없음"}
               </p>
             </div>
           ))
@@ -95,8 +96,8 @@ export default function ProfileSelect() {
           <label>
             <input
               type="checkbox"
-              checked={selectedFields.name}
-              onChange={() => handleCheckboxChange("name")}
+              checked={selectedFields.myName}
+              onChange={() => handleCheckboxChange("myName")}
             />
             <strong>이름:</strong> {selectedProfile.name}
           </label>
@@ -104,28 +105,28 @@ export default function ProfileSelect() {
           <label>
             <input
               type="checkbox"
-              checked={selectedFields.gender}
-              onChange={() => handleCheckboxChange("gender")}
+              checked={selectedFields.myJob}
+              onChange={() => handleCheckboxChange("myJob")}
             />
-            <strong>성별:</strong> {selectedProfile.gender}
+            <strong>직업:</strong> {selectedProfile.job}
           </label>
           <br />
           <label>
             <input
               type="checkbox"
-              checked={selectedFields.age}
-              onChange={() => handleCheckboxChange("age")}
+              checked={selectedFields.myAffiliation}
+              onChange={() => handleCheckboxChange("myAffiliation")}
             />
-            <strong>나이(만):</strong> {selectedProfile.age}
+            <strong>소속:</strong> {selectedProfile.affiliation}
           </label>
           <br />
           <label>
             <input
               type="checkbox"
-              checked={selectedFields.email}
-              onChange={() => handleCheckboxChange("email")}
+              checked={selectedFields.myStuNum}
+              onChange={() => handleCheckboxChange("myStuNum")}
             />
-            <strong>보낼 이메일:</strong> {selectedProfile.email}
+            <strong>학번:</strong> {selectedProfile.number}
           </label>
         </div>
       </div>

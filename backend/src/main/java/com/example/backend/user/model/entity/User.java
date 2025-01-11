@@ -18,7 +18,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "users")
 @Getter
 @Setter
 @Builder
@@ -54,12 +53,17 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<UserAffiliation> affiliations;
 
-
+    @Column(name = "email_generation_count", nullable = false, columnDefinition = "int default 0")
+    private int emailGenerationCount;
 
     @PrePersist
     public void prePersist() {
         // 엔티티가 처음 저장될 때 createdAt을 현재 시간으로 설정
         this.createdAt = new Timestamp(System.currentTimeMillis());
+
+        // emailGenerationCount 기본값 설정
+        if (this.emailGenerationCount == 0) {
+            this.emailGenerationCount = 0;
+        }
     }
 }
-

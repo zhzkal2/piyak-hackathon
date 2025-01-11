@@ -2,32 +2,41 @@ package com.example.backend.folders.controller;
 
 import com.example.backend.folders.model.request.RequestData;
 import com.example.backend.folders.service.FolderService;
+import com.example.backend.mail.model.response.EmailResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/folder")
 @Log4j2
 public class FolderController {
 
-
     private final FolderService folderService;
 
     @PostMapping("/save")
-    public ResponseEntity<Void> save(@RequestBody RequestData requestData) {
-        if(requestData != null) {
-            folderService.splitData(requestData);
-        }
-        else {
-            log.error("ERROR : folderRequest is not found");
+    public ResponseEntity<EmailResponse> save(@RequestBody RequestData requestData) {
+        if (requestData == null) {
+            log.error("ERROR: requestData is null");
+            return ResponseEntity.badRequest().build();
         }
 
-        return ResponseEntity.ok().build();
+        EmailResponse emailResponse = folderService.splitData(requestData);
+        return ResponseEntity.ok(emailResponse);
+    }
+
+    @GetMapping("/save-state")
+    public HttpEntity<Object> saveState(@RequestBody EmailResponse emailResponse) {
+        if (emailResponse == null) {
+            log.error("ERROR: emailResponse is null");
+        }
+        else {
+            folderService.saveEmailResponse(emailResponse);
+        }
+        return ResponseEntity.ok(HttpStatus.CREATED);
     }
 }

@@ -1,7 +1,8 @@
 .navigation-container {
   display: flex;
   justify-content: space-between;
-  margin-top: 20px;
+  background-color: #f2f8f8; 
+  
 }
 
 .navigation-button {

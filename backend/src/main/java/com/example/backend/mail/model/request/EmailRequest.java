@@ -13,6 +13,7 @@ public class EmailRequest {
     private Form2 form2;
     private Form3 form3;
     private String language; // 언어 설정 필드 추가
+    private String state;
 
     @Data
     public static class Form1 {

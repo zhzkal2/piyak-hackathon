@@ -47,6 +47,8 @@ public class FolderService {
 
         emailRequest.setLanguage("EN");
 
+        emailRequest.setState(requestData.getState());
+
         return emailRequest;
     }
 

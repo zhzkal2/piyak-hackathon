@@ -13,3 +13,10 @@ export const saveArchive = async ({ form }) => {
   const { status, data } = response;
   return { status, data };
 };
+
+// 보관함 가져오기
+export const fetchForm = async () => {
+  const response = await axiosInstance.get(`/get-mails`);
+  const { status, data } = response;
+  return { status, data };
+};

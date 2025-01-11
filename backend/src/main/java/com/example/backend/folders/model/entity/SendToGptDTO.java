@@ -1,4 +1,4 @@
-package com.example.backend.folders.model.dto;
+package com.example.backend.folders.model.entity;
 
 import lombok.Data;
 import lombok.Setter;

@@ -1,8 +1,8 @@
 package com.example.backend.folders.service;
 
 
-import com.example.backend.folders.model.dto.SendToEmailDTO;
-import com.example.backend.folders.model.dto.SendToGptDTO;
+import com.example.backend.folders.model.entity.SendToEmailDTO;
+import com.example.backend.folders.model.entity.SendToGptDTO;
 import com.example.backend.folders.model.repository.FolderRepository;
 import com.example.backend.folders.model.request.RequestData;
 import lombok.RequiredArgsConstructor;

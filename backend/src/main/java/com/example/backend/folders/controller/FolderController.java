@@ -1,6 +1,5 @@
 package com.example.backend.folders.controller;
 
-import com.example.backend.folders.model.dto.SendToGptDTO;
 import com.example.backend.folders.model.request.RequestData;
 import com.example.backend.folders.service.FolderService;
 import lombok.RequiredArgsConstructor;

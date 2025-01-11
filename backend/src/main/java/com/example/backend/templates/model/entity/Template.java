@@ -1,4 +1,4 @@
-package com.example.backend.templets.model.entity;
+package com.example.backend.templates.model.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;

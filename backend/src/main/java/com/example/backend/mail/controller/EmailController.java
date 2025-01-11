@@ -26,23 +26,25 @@ public class EmailController {
 
     private final EmailService emailService;
 
-//    private final SendService sendService;
-
     private final GoogleOAuthService googleOAuthService;
 
     private final GmailService gmailService;
 
+    private final String BASE_URL = "https://www.googleapis.com/gmail/v1/users/";
+
+    private static final String GMAIL_SCOPES = "https://www.googleapis.com/auth/gmail.readonly";
+
     // 모든 메일 응답 조회
     @GetMapping("/all")
-    public ResponseEntity<List<EmailResponse>> getAllEmails(@RequestParam String recipientMail) {
-        List<EmailResponse> emails = emailService.getAllEmails(recipientMail);
+    public ResponseEntity<List<EmailResponse>> getAllEmails() {
+        List<EmailResponse> emails = emailService.getAllEmails();
         return ResponseEntity.ok(emails);
     }
 
     // 저장된 메일 응답 조회
     @GetMapping("/saved")
-    public ResponseEntity<List<EmailResponse>> getSavedEmails(@RequestParam String recipientMail) {
-        List<EmailResponse> emails = emailService.getSavedEmails(recipientMail);
+    public ResponseEntity<List<EmailResponse>> getSavedEmails() {
+        List<EmailResponse> emails = emailService.getSavedEmails();
         return ResponseEntity.ok(emails);
     }
 
@@ -63,12 +65,7 @@ public class EmailController {
     public void saveState(@RequestBody EmailResponse emailResponse) {
         emailService.updateState(emailResponse);
     }
-
-    private final String BASE_URL = "https://www.googleapis.com/gmail/v1/users/";
-
-
-    private static final String GMAIL_SCOPES = "https://www.googleapis.com/auth/gmail.readonly";
-
+  
     @GetMapping("/emails")
     public String getEmails(@RequestParam String accessToken) {
 //        // 1. OAuth2.0 인증 코드로 액세스 토큰 받기
@@ -83,7 +80,6 @@ public class EmailController {
         try {
             // EmailService를 호출하여 이메일 전송
             sendService.sendEmail(
-                    emailSendRequest.getAccessToken(),
                     emailSendRequest.getRecipient(),
                     emailSendRequest.getSubject(),
                     emailSendRequest.getBody()

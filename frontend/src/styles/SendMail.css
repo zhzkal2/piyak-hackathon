@@ -2,9 +2,7 @@
   width: 84vw;
   height: 90vh;
   margin: 0 auto;
-  padding-left: 8rem;
-  padding-right: 7rem;
-  background-color: #f2f8f8;
+  background: #f2f8f8;
 }
 
 .send-mail-header {
@@ -43,4 +41,14 @@
       margin-right: 0.5rem;
     }
   }
+}
+
+.send-mail-wrapper {
+  display: flex;
+  flex-direction: column;
+
+  padding-left: 3rem;
+  padding-right: 3rem;
+  background-color: #f2f8f8;
+  width: 100%;
 }

@@ -32,4 +32,8 @@ public class EmailService {
     public List<EmailResponse> getSentEmails(String recipientMail) {
         return emailResponseRepository.findByRecipientMailAndState(EmailState.SENT);
     }
+
+    public void updateState(EmailResponse emailResponse) {
+        emailResponseRepository.save(emailResponse);
+    }
 }

@@ -5,6 +5,7 @@
   width: 16vw;
   height: 90vh;
   background-color: #FFF;
+  flex-shrink: 0;
 }
 
 .gnbWrapper {

@@ -1,16 +1,44 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import useProfileStore from "@/hooks/useProfileStore";
 
 export default function ProfileForm() {
-  const { profile, setProfile } = useProfileStore();
-  const [formData, setFormData] = useState(profile);
+  const { addProfile } = useProfileStore(); // 새로운 프로필 추가 함수 가져오기
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setProfile(formData);
-    alert("개인 정보가 저장되었습니다.");
+  // 폼의 초기값 설정
+  const initialProfile = {
+    name: "",
+    gender: "",
+    age: "",
+    email: "",
   };
 
+  const [formData, setFormData] = useState(initialProfile);
+
+  // 폼 제출 핸들러
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    // 빈 필드가 있는지 확인
+    if (
+      !formData.name ||
+      !formData.gender ||
+      !formData.age ||
+      !formData.email
+    ) {
+      alert("모든 필드를 채워주세요!");
+      return;
+    }
+
+    // 새로운 프로필 추가
+    addProfile(formData);
+
+    // 폼 초기화
+    setFormData(initialProfile);
+
+    alert("새로운 프로필이 저장되었습니다.");
+  };
+
+  // 입력 값 변경 핸들러
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -47,7 +75,7 @@ export default function ProfileForm() {
         </select>
       </div>
       <div>
-        <label htmlFor="age">나이&#40;만&#41;:</label>
+        <label htmlFor="age">나이(만):</label>
         <input
           type="number"
           id="age"

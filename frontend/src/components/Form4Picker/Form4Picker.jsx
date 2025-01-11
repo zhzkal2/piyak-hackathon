@@ -64,7 +64,7 @@ GDG Campus Korea입니다.
             <strong>{generatedData.generatedTitle}</strong>
           </div>
           <p className="recipient">
-            받는 사람 <span>{generatedData.recipientMail}</span>
+            받는 사람 <span>{"<"}{generatedData.recipientMail}{">"}</span>
           </p>
           <div className="generated-content">
             {generatedData.generatedContent.split("\n").map((line, index) => (
@@ -77,7 +77,7 @@ GDG Campus Korea입니다.
       <div className="right-section">
         <h4>추가 요청, 변경 사항</h4>
         <textarea
-          placeholder="요청 사항이나 변경 사항을 입력해주세요"
+          placeholder="내용을 입력해주세요"
           className="feedback-textarea"
         ></textarea>
 
@@ -94,9 +94,10 @@ GDG Campus Korea입니다.
         </div>
 
         <h4>템플릿 등록하기</h4>
-        <button className="template-button" onClick={handleSave}>
-          저장
-        </button>
+        <div className="template-button-container">
+          <button className="template-button" onClick={handleSave}>저장</button>
+          <button className="template-button" disabled>수정하기</button>
+        </div>
       </div>
     </div>
   );

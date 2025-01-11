@@ -1,6 +1,5 @@
 package com.example.backend.mail.model.response;
 
-import com.example.backend.mail.model.entity.Email;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -31,10 +30,6 @@ public class EmailResponse {
     @Column(name = "state")
     @Enumerated(EnumType.STRING)
     private EmailState state;
-
-    @ManyToOne
-    @JoinColumn(name = "email_id", nullable = false)
-    private Email email;
 
     @PrePersist
     public void prePersist() {

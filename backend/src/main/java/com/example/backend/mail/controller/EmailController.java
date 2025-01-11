@@ -50,8 +50,8 @@ public class EmailController {
 
     // 전송된 메일 응답 조회
     @GetMapping("/sent")
-    public ResponseEntity<List<EmailResponse>> getSentEmails(@RequestParam String recipientMail) {
-        List<EmailResponse> emails = emailService.getSentEmails(recipientMail);
+    public ResponseEntity<List<EmailResponse>> getSentEmails() {
+        List<EmailResponse> emails = emailService.getSentEmails();
         return ResponseEntity.ok(emails);
     }
 

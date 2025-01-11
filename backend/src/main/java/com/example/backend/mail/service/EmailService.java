@@ -1,15 +1,11 @@
 package com.example.backend.mail.service;
 
-import com.example.backend.mail.model.entity.Email;
-import com.example.backend.mail.model.repository.EmailRepository;
 import com.example.backend.mail.model.repository.EmailResponseRepository;
 import com.example.backend.mail.model.response.EmailResponse;
 import com.example.backend.mail.model.response.EmailState;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -20,17 +16,17 @@ public class EmailService {
 
     // 모든 메일 응답 조회
     public List<EmailResponse> getAllEmails() {
-        return emailResponseRepository.findAllByRecipientMail();
+        return emailResponseRepository.findAllEmails();
     }
 
     // 저장된 메일 응답 조회
     public List<EmailResponse> getSavedEmails() {
-        return emailResponseRepository.findByRecipientMailAndState(EmailState.SAVED);
+        return emailResponseRepository.findByState(EmailState.SAVED);
     }
 
     // 전송된 메일 응답 조회
-    public List<EmailResponse> getSentEmails(String recipientMail) {
-        return emailResponseRepository.findByRecipientMailAndState(EmailState.SENT);
+    public List<EmailResponse> getSentEmails() {
+        return emailResponseRepository.findByState(EmailState.SENT);
     }
 
     public void updateState(EmailResponse emailResponse) {

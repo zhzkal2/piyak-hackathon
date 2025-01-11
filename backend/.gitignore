@@ -47,4 +47,5 @@ target/
 
 /frontend/
 
-application.properties
+# Properties Files
+*.properties

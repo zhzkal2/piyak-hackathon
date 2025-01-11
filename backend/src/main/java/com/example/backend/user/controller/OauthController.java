@@ -1,10 +1,10 @@
-package com.example.backend.login.controller;
+package com.example.backend.user.controller;
 
 
-import com.example.backend.login.model.entity.SocialLoginType;
-import com.example.backend.login.model.entity.User;
-import com.example.backend.login.model.response.UserResponse;
-import com.example.backend.login.service.OauthService;
+import com.example.backend.user.model.entity.SocialLoginType;
+import com.example.backend.user.model.entity.User;
+import com.example.backend.user.model.response.UserResponse;
+import com.example.backend.user.service.OauthService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;

@@ -1,8 +1,8 @@
-package com.example.backend.login.service;
+package com.example.backend.user.service;
 
-import com.example.backend.login.model.entity.SocialLoginType;
-import com.example.backend.login.model.entity.User;
-import com.example.backend.login.model.repository.UserRepository;
+import com.example.backend.user.model.entity.SocialLoginType;
+import com.example.backend.user.model.entity.User;
+import com.example.backend.user.model.repository.UserRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;

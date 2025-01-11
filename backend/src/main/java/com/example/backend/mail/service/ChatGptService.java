@@ -32,6 +32,7 @@ public class ChatGptService {
         EmailResponse emailResponse = new EmailResponse();
         emailResponse.setGeneratedTitle(title);
         emailResponse.setGeneratedContent(content);
+        emailResponse.setRecipientMail(emailRequest.getForm2().getRecipientMail());
 
         emailResponseRepository.save(emailResponse);
         return emailResponse;

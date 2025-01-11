@@ -3,52 +3,80 @@ import useProfileStore from "@/hooks/useProfileStore";
 import "./Form1Picker.css";
 
 export default function Form1Picker() {
-  const { profiles } = useProfileStore(); // zustand의 profiles 상태 가져오기
-  console.log(profiles);
+  const { profiles } = useProfileStore();
 
-  const initialProfile = {
-    name: "",
-    job: "",
-    affiliation: "",
-    number: "",
-  }; // 기본값 설정
+  const initialProfile = (() => {
+    const savedDataString = localStorage.getItem("save-form1");
+    if (savedDataString) {
+      const savedData = JSON.parse(savedDataString);
+      const profile = {
+        name: savedData.name || "",
+        job: savedData.job || "",
+        affiliation: savedData.affiliation || "",
+        number: savedData.number || "",
+      };
+      return profile;
+    }
+    return {
+      name: "",
+      job: "",
+      affiliation: "",
+      number: "",
+    };
+  })();
 
-  const [selectedProfile, setSelectedProfile] = useState(initialProfile); // 선택된 프로필 저장
-  const [selectedFields, setSelectedFields] = useState({
-    name: false,
-    job: false,
-    affiliation: false,
-    number: false,
-  }); // 선택된 항목 저장
+  const initialFields = (() => {
+    const savedDataString = localStorage.getItem("save-form1");
+    if (savedDataString) {
+      const savedData = JSON.parse(savedDataString);
+      return {
+        name: !!savedData.name,
+        job: !!savedData.job,
+        affiliation: !!savedData.affiliation,
+        number: !!savedData.number,
+      };
+    }
+    return {
+      name: false,
+      job: false,
+      affiliation: false,
+      number: false,
+    };
+  })();
 
-  // 프로필 선택 핸들러
-  const handleSelectProfile = (profile) => {
-    setSelectedProfile(profile); // 선택된 프로필 업데이트
-  };
+  const [selectedProfile, setSelectedProfile] = useState(initialProfile);
+  const [selectedFields, setSelectedFields] = useState(initialFields);
 
-  // 체크박스 상태 업데이트 핸들러
   const handleCheckboxChange = (field) => {
     setSelectedFields((prev) => ({
       ...prev,
-      [field]: !prev[field], // 체크박스 상태 토글
+      [field]: !prev[field],
     }));
   };
 
-  // LocalStorage에 선택된 데이터를 저장
+  const handleSelectProfile = (profile) => {
+    localStorage.removeItem("save-form1");
+    setSelectedProfile(profile);
+    setSelectedFields({
+      name: false,
+      job: false,
+      affiliation: false,
+      number: false,
+    });
+  };
+
   const saveDataToLocalStorage = useCallback(() => {
     const dataToSave = {};
     Object.keys(selectedFields).forEach((key) => {
-      dataToSave[key] = selectedFields[key] ? selectedProfile[key] : null; // 선택된 필드만 저장
+      dataToSave[key] = selectedFields[key] ? selectedProfile[key] : null;
     });
 
     localStorage.setItem("save-form1", JSON.stringify(dataToSave));
-    console.log("save-form1에 데이터가 저장되었습니다.", dataToSave);
   }, [selectedFields, selectedProfile]);
 
-  // 언마운트될 때 LocalStorage에 저장
   useEffect(() => {
     return () => {
-      saveDataToLocalStorage(); // 컴포넌트 언마운트 시 호출
+      saveDataToLocalStorage();
     };
   }, [saveDataToLocalStorage]);
 
@@ -60,7 +88,7 @@ export default function Form1Picker() {
           profiles.map((profile, index) => (
             <div
               key={index}
-              onClick={() => handleSelectProfile(profile)} // 클릭 시 선택된 프로필 업데이트
+              onClick={() => handleSelectProfile(profile)}
               style={{
                 cursor: "pointer",
                 border: "1px solid #ccc",

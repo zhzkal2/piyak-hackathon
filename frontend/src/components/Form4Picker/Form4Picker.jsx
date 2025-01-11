@@ -1,10 +1,19 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./Form4Picker.css";
 
 export default function Form4Picker() {
-  const data = {
-    generatedTitle: "[GDG Campus Korea] 삐약톤 행사 개인 참여자 안내",
-    generatedContent: `안녕하세요.
+  const initialData = (() => {
+    const savedData = JSON.parse(localStorage.getItem("save-form4"));
+    if (savedData) {
+      return {
+        generatedTitle: savedData.generatedTitle || "",
+        generatedContent: savedData.generatedContent || "",
+        recipientMail: "gdgkoreacampus@gmail.com",
+      };
+    }
+    return {
+      generatedTitle: "[GDG Campus Korea] 삐약톤 행사 개인 참여자 안내",
+      generatedContent: `안녕하세요.
 GDG Campus Korea입니다.
 
 삐약톤 행사에 관심을 가지고 신청해 주셔서 감사합니다.
@@ -18,10 +27,11 @@ GDG Campus Korea입니다.
 - 행사 일시: 2025년 1월 11일 오전 11시 ~ 1월 12일 오후 2시
 - 행사 장소: 동국대학교 혜화관 2층 고순청 세미나실 (아래 지도 참고)
 - 준비물: 신분증, 개인 노트북 & 충전기, 팀티블러(팀 당 2개 제공), 팀블러 및 보온병(교내 정수기 사용 필수), 담요`,
-    recipientMail: "gdgkoreacampus@gmail.com",
-  };
+      recipientMail: "gdgkoreacampus@gmail.com",
+    };
+  })();
 
-  const [generatedData] = useState(data);
+  const [generatedData, setGeneratedData] = useState(initialData);
 
   const handleSave = () => {
     const saveData = {
@@ -32,6 +42,17 @@ GDG Campus Korea입니다.
     localStorage.setItem("save-form4", JSON.stringify(saveData));
     alert("데이터가 저장되었습니다!");
   };
+
+  useEffect(() => {
+    const savedData = JSON.parse(localStorage.getItem("save-form4"));
+    if (savedData) {
+      setGeneratedData((prev) => ({
+        ...prev,
+        generatedTitle: savedData.generatedTitle || prev.generatedTitle,
+        generatedContent: savedData.generatedContent || prev.generatedContent,
+      }));
+    }
+  }, []);
 
   return (
     <div className="form4-picker-container">

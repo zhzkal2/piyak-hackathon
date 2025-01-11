@@ -18,20 +18,24 @@ function RecipientInputField({ label, type, value, required, onChange }) {
 
 export default function Form2Picker() {
   const { setRecipient } = useRecipientStore();
-  const [recipientData, setRecipientData] = useState({
-    recipientName: "",
-    recipientMail: "",
-  });
 
-  // 마운트 시 LocalStorage에서 데이터 가져오기
-  useEffect(() => {
-    const savedData = JSON.parse(localStorage.getItem("save-form2"));
-    if (savedData) {
-      setRecipientData(savedData); // 저장된 데이터를 상태에 반영
+  const initialRecipientData = (() => {
+    const savedDataString = localStorage.getItem("save-form2");
+    if (savedDataString) {
+      const savedData = JSON.parse(savedDataString);
+      return {
+        recipientName: savedData.recipientName || "",
+        recipientMail: savedData.recipientMail || "",
+      };
     }
-  }, []);
+    return {
+      recipientName: "",
+      recipientMail: "",
+    };
+  })();
 
-  // 데이터를 LocalStorage에 저장하는 함수
+  const [recipientData, setRecipientData] = useState(initialRecipientData);
+
   const saveDataToLocalStorage = useCallback(() => {
     localStorage.setItem("save-form2", JSON.stringify(recipientData));
     console.log("save-form2에 데이터가 저장되었습니다.", recipientData);
@@ -39,13 +43,12 @@ export default function Form2Picker() {
 
   const handleChange = (field, value) => {
     setRecipientData((prev) => ({ ...prev, [field]: value }));
-    setRecipient({ [field]: value }); // zustand 상태 업데이트 (선택 사항)
+    setRecipient({ [field]: value });
   };
 
-  // 언마운트될 때 데이터 저장
   useEffect(() => {
     return () => {
-      saveDataToLocalStorage(); // 컴포넌트 언마운트 시 호출
+      saveDataToLocalStorage();
     };
   }, [saveDataToLocalStorage]);
 

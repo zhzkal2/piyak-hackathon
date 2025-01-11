@@ -2,35 +2,43 @@ import React, { useState, useEffect, useCallback } from "react";
 import "./Form3Picker.css";
 
 export default function Form3Picker() {
-  const [formData, setFormData] = useState({
-    situation: "",
-    desiredAnswer: "",
-    tone: "",
-  });
-
-  // 마운트 시 LocalStorage에서 데이터 가져오기
-  useEffect(() => {
+  const initialFormData = (() => {
     const savedData = JSON.parse(localStorage.getItem("save-form3"));
     if (savedData) {
-      setFormData(savedData); // 저장된 데이터를 상태에 반영
+      return {
+        situation: savedData.situation || "",
+        desiredAnswer: savedData.desiredAnswer || "",
+        language: savedData.language || "",
+        tone: savedData.tone || "",
+      };
     }
-  }, []);
+    return {
+      situation: "",
+      desiredAnswer: "",
+      language: "",
+      tone: "",
+    };
+  })();
 
-  // 데이터를 LocalStorage에 저장하는 함수
+  const [formData, setFormData] = useState(initialFormData);
+
   const saveDataToLocalStorage = useCallback(() => {
     localStorage.setItem("save-form3", JSON.stringify(formData));
     console.log("save-form3에 데이터가 저장되었습니다.", formData);
   }, [formData]);
 
-  // 언마운트될 때 데이터 저장
   useEffect(() => {
     return () => {
-      saveDataToLocalStorage(); // 컴포넌트 언마운트 시 호출
+      saveDataToLocalStorage();
     };
   }, [saveDataToLocalStorage]);
 
   const handleToneChange = (tone) => {
-    setFormData((prev) => ({ ...prev, tone })); // 선택된 말투 업데이트
+    setFormData((prev) => ({ ...prev, tone }));
+  };
+
+  const handleLanguageChange = (language) => {
+    setFormData((prev) => ({ ...prev, language }));
   };
 
   return (
@@ -55,6 +63,23 @@ export default function Form3Picker() {
         className="form3-textarea"
       />
 
+      <h3>언어</h3>
+      <div className="tone-options">
+        {["korean", "english", "japanese", "chinese", "french", "german"].map(
+          (language) => (
+            <button
+              key={language}
+              onClick={() => handleLanguageChange(language)}
+              className={`tone-button ${
+                formData.language === language ? "tone-selected" : ""
+              }`}
+            >
+              {language}
+            </button>
+          )
+        )}
+      </div>
+
       <h3>말투</h3>
       <div className="tone-options">
         {["격식있는", "친근한", "겸손한", "유머러스", "간결한", "논리적"].map(
@@ -71,6 +96,7 @@ export default function Form3Picker() {
           )
         )}
       </div>
+      <button>제출</button>
     </div>
   );
 }

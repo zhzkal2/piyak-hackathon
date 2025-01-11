@@ -27,7 +27,7 @@ public class GoogleOauth implements SocialOauth {
     @Override
     public String getOauthRedirectURL() {
         Map<String, Object> params = new HashMap<>();
-        params.put("scope", "profile email");
+        params.put("scope", "profile email https://www.googleapis.com/auth/gmail.readonly https://www.googleapis.com/auth/gmail.send");
         params.put("response_type", "code");
         params.put("client_id", GOOGLE_SNS_CLIENT_ID);
         params.put("redirect_uri", GOOGLE_SNS_CALLBACK_URL);

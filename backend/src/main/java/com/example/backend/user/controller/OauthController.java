@@ -8,6 +8,8 @@ import com.example.backend.user.service.OauthService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -52,7 +54,7 @@ public class OauthController {
     public ResponseEntity<?> callback(
             @PathVariable(name = "socialLoginType") SocialLoginType socialLoginType,
             @RequestParam(name = "code") String code,
-            HttpSession session) {
+            HttpServletResponse response) {
 
         log.info(">> 소셜 로그인 API 서버로부터 받은 code :: {}", code);
 
@@ -62,8 +64,14 @@ public class OauthController {
         if (user != null) {
             log.info(">> 사용자 정보 DB 저장 완료 :: {}", user.getName());
 
-            // 세션에 사용자 정보 저장
-            session.setAttribute("loginUser", user);
+            // 액세스 토큰을 쿠키에 담을 수도 있습니다 (필요하다면)
+            Cookie tokenCookie = new Cookie("accessToken", user.getAccessToken());
+            tokenCookie.setPath("/");
+            tokenCookie.setHttpOnly(false);
+            tokenCookie.setSecure(false);
+            tokenCookie.setMaxAge(24 * 3600); // 30분
+            response.addCookie(tokenCookie); // 쿠키를 응답에 추가
+
 
             // 로그인한 유저 정보를 response body로 반환
             return ResponseEntity.ok(new UserResponse(user.getName(), user.getAccessToken(), user.getProvider()));

@@ -1,7 +1,7 @@
-package com.example.backend.templets.controller;
+package com.example.backend.templates.controller;
 
-import com.example.backend.templets.model.entity.Template;
-import com.example.backend.templets.service.TemplatesService;
+import com.example.backend.templates.model.entity.Template;
+import com.example.backend.templates.service.TemplatesService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;

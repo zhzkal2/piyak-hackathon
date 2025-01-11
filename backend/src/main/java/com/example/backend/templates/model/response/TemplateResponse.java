@@ -1,4 +1,4 @@
-package com.example.backend.templets.model.response;
+package com.example.backend.templates.model.response;
 
 import lombok.Data;
 

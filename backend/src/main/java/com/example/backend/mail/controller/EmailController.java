@@ -11,12 +11,7 @@ import com.example.backend.mail.service.SendService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,11 +20,13 @@ import java.util.List;
 @RequiredArgsConstructor
 public class EmailController {
 
+    private final SendService sendService;
+
     private final ChatGptService chatGptService;
 
     private final EmailService emailService;
 
-    private final SendService sendService;
+//    private final SendService sendService;
 
     private final GoogleOAuthService googleOAuthService;
 
@@ -60,6 +57,11 @@ public class EmailController {
     public ResponseEntity<EmailResponse> generateEmail(@RequestBody EmailRequest emailRequest) {
         EmailResponse response = chatGptService.generateEmail(emailRequest);
         return ResponseEntity.ok(response);
+    }
+
+    @PutMapping("/save-state")
+    public void saveState(@RequestBody EmailResponse emailResponse) {
+        emailService.updateState(emailResponse);
     }
 
     private final String BASE_URL = "https://www.googleapis.com/gmail/v1/users/";

@@ -19,10 +19,10 @@ import org.json.JSONObject;
 public class ChatGptService {
 
     private final EmailResponseRepository emailResponseRepository;
-    private static final String API_URL = "https://api.openai.com/v1/chat/completions";
+    private static final String API_URL = "";
 
-    @Value("${openai.api.key}")
-    private String apiKey;
+     @Value("${openai.api.key}")
+     private String apiKey;
 
     public EmailResponse generateEmail(EmailRequest emailRequest) {
         RestTemplate restTemplate = new RestTemplate();
@@ -73,14 +73,16 @@ public class ChatGptService {
             return emailResponse;
 
         } catch (HttpClientErrorException e) {
-            log.error("HTTP Status: " + e.getStatusCode());
-            log.error("Response Body: " + e.getResponseBodyAsString());
+            log.error("HTTP Status: {}", e.getStatusCode());
+            log.error("Response Body: {}", e.getResponseBodyAsString());
+            log.error("Request Headers: {}", headers);
+            log.error("Request Body: {}", requestBody.toString());
+
             throw new RuntimeException("Failed to generate email. Please try again later.");
         }
     }
 
     public EmailResponse getEmailResponseById(Long id) {
-        // EmailResponse 조회 로직
         return emailResponseRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("EmailResponse with id " + id + " not found."));
     }

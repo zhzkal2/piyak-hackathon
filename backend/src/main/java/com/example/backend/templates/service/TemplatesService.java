@@ -14,6 +14,6 @@ public class TemplatesService {
     private final ChatGptService chatGptService;
     private final EmailService emailService;
 
-    public void getTemplates() {
-    }
+//    public void save(Template template) {
+//    }
 }

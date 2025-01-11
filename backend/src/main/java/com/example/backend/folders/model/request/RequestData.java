@@ -28,7 +28,6 @@ public class RequestData {
     public static class Form2 {
         private String recipientName;  // 보낼 사람 이름
         private String recipientMail;  // 보낼 이메일
-        private String fileToSend;     // 보낼 파일
     }
 
     @Data

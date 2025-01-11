@@ -28,6 +28,9 @@ public class EmailResponse {
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
+    @Column(name = "state")
+    private String state;
+
     @PrePersist
     public void prePersist() {
         this.createdAt = LocalDateTime.now();

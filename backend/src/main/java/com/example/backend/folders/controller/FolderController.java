@@ -2,16 +2,13 @@ package com.example.backend.folders.controller;
 
 import com.example.backend.folders.model.request.RequestData;
 import com.example.backend.folders.service.FolderService;
-import com.example.backend.mail.model.entity.Email;
 import com.example.backend.mail.model.response.EmailResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -30,5 +27,16 @@ public class FolderController {
 
         EmailResponse emailResponse = folderService.splitData(requestData);
         return ResponseEntity.ok(emailResponse);
+    }
+
+    @GetMapping("/save-state")
+    public HttpEntity<Object> saveState(@RequestBody EmailResponse emailResponse) {
+        if (emailResponse == null) {
+            log.error("ERROR: emailResponse is null");
+        }
+        else {
+            folderService.saveEmailResponse(emailResponse);
+        }
+        return ResponseEntity.ok(HttpStatus.CREATED);
     }
 }

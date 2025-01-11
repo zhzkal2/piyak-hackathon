@@ -3,6 +3,11 @@
   max-width: 600px;
   margin: 0 auto;
   text-align: center;
+
+  & h3 {
+    font-size: 16px;
+    text-align: start;
+  }
 }
 
 .form3-textarea {
@@ -10,8 +15,8 @@
   height: 100px;
   margin: 10px 0 20px;
   padding: 10px;
-  border: 1px solid #ccc;
   border-radius: 5px;
+  border: none;
   font-size: 14px;
   resize: none;
 }

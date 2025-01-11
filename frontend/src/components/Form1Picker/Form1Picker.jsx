@@ -86,32 +86,63 @@ export default function Form1Picker() {
       <div className="profile-select-options">
         {profiles.length > 0 ? (
           profiles.map((profile, index) => (
-            <div
+            <section
               key={index}
               onClick={() => handleSelectProfile(profile)}
               style={{
-                cursor: "pointer",
-                border: "1px solid #ccc",
-                padding: "10px",
-                margin: "10px 0",
-                borderRadius: "10px",
                 backgroundColor:
-                  selectedProfile === profile ? "#f0f0f0" : "#fff",
+                  selectedProfile === profile ? "#d4f7f9" : "#fff",
               }}
             >
-              <p>
-                <strong>이름:</strong> {profile.name || "정보 없음"}
-              </p>
-              <p>
-                <strong>직업:</strong> {profile.job || "정보 없음"}
-              </p>
-              <p>
-                <strong>소속:</strong> {profile.affiliation || "정보 없음"}
-              </p>
-              <p>
-                <strong>학번:</strong> {profile.number || "정보 없음"}
-              </p>
-            </div>
+              <div>
+                <strong>이름</strong>
+                <p
+                  style={{
+                    backgroundColor:
+                      selectedProfile === profile ? "" : "whitesmoke",
+                    color: selectedProfile === profile ? "" : "gray",
+                  }}
+                >
+                  {profile.name || "정보 없음"}
+                </p>
+              </div>
+              <div>
+                <strong>직업</strong>
+                <p
+                  style={{
+                    backgroundColor:
+                      selectedProfile === profile ? "" : "whitesmoke",
+                    color: selectedProfile === profile ? "" : "gray",
+                  }}
+                >
+                  {profile.job || "정보 없음"}
+                </p>
+              </div>
+              <div>
+                <strong>소속</strong>
+                <p
+                  style={{
+                    backgroundColor:
+                      selectedProfile === profile ? "" : "whitesmoke",
+                    color: selectedProfile === profile ? "" : "gray",
+                  }}
+                >
+                  {profile.affiliation || "정보 없음"}
+                </p>
+              </div>
+              <div>
+                <strong>학번</strong>
+                <p
+                  style={{
+                    backgroundColor:
+                      selectedProfile === profile ? "" : "whitesmoke",
+                    color: selectedProfile === profile ? "" : "gray",
+                  }}
+                >
+                  {profile.number || "정보 없음"}
+                </p>
+              </div>
+            </section>
           ))
         ) : (
           <p>저장된 프로필 정보가 없습니다.</p>
@@ -120,43 +151,56 @@ export default function Form1Picker() {
 
       <h3>참고할 정보 선택하기</h3>
       <div className="profile-select-result">
-        <div>
-          <label>
-            <input
-              type="checkbox"
-              checked={selectedFields.name}
-              onChange={() => handleCheckboxChange("name")}
-            />
-            <strong>이름:</strong> {selectedProfile.name}
-          </label>
-          <br />
-          <label>
-            <input
-              type="checkbox"
-              checked={selectedFields.job}
-              onChange={() => handleCheckboxChange("job")}
-            />
-            <strong>직업:</strong> {selectedProfile.job}
-          </label>
-          <br />
-          <label>
-            <input
-              type="checkbox"
-              checked={selectedFields.affiliation}
-              onChange={() => handleCheckboxChange("affiliation")}
-            />
-            <strong>소속:</strong> {selectedProfile.affiliation}
-          </label>
-          <br />
-          <label>
-            <input
-              type="checkbox"
-              checked={selectedFields.number}
-              onChange={() => handleCheckboxChange("number")}
-            />
-            <strong>학번:</strong> {selectedProfile.number}
-          </label>
-        </div>
+        <label
+          style={{
+            backgroundColor: selectedFields.name ? "#d4f7f9" : "whitesmoke",
+          }}
+        >
+          <input
+            type="checkbox"
+            checked={selectedFields.name}
+            onChange={() => handleCheckboxChange("name")}
+          />
+          <p>{selectedProfile.name}</p>
+        </label>
+        <label
+          style={{
+            backgroundColor: selectedFields.job ? "#d4f7f9" : "whitesmoke",
+          }}
+        >
+          <input
+            type="checkbox"
+            checked={selectedFields.job}
+            onChange={() => handleCheckboxChange("job")}
+          />
+          <p>{selectedProfile.job}</p>
+        </label>
+        <label
+          style={{
+            backgroundColor: selectedFields.affiliation
+              ? "#d4f7f9"
+              : "whitesmoke",
+          }}
+        >
+          <input
+            type="checkbox"
+            checked={selectedFields.affiliation}
+            onChange={() => handleCheckboxChange("affiliation")}
+          />
+          <p>{selectedProfile.affiliation}</p>
+        </label>
+        <label
+          style={{
+            backgroundColor: selectedFields.number ? "#d4f7f9" : "whitesmoke",
+          }}
+        >
+          <input
+            type="checkbox"
+            checked={selectedFields.number}
+            onChange={() => handleCheckboxChange("number")}
+          />
+          <p>{selectedProfile.number}</p>
+        </label>
       </div>
     </div>
   );

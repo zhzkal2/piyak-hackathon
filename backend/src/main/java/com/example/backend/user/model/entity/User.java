@@ -62,4 +62,3 @@ public class User {
         this.createdAt = new Timestamp(System.currentTimeMillis());
     }
 }
-

@@ -25,11 +25,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class EmailController {
 
-    private final SendService sendService;
-
     private final ChatGptService chatGptService;
 
     private final EmailService emailService;
+
+    private final SendService sendService;
 
     private final GoogleOAuthService googleOAuthService;
 
@@ -80,7 +80,7 @@ public class EmailController {
     public ResponseEntity<String> sendEmail(@RequestBody EmailSendRequest emailSendRequest) {
         try {
             // EmailService를 호출하여 이메일 전송
-            emailService.sendEmail(
+            sendService.sendEmail(
                     emailSendRequest.getAccessToken(),
                     emailSendRequest.getRecipient(),
                     emailSendRequest.getSubject(),

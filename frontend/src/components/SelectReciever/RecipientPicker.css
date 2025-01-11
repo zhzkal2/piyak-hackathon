@@ -1,0 +1,39 @@
+#recipientPicker {
+  display: flex;
+  flex-direction: column;
+  
+  >title {
+    display: flex;
+    align-content: start;
+  }
+
+  >section {
+    display: flex;
+    flex-direction: column;
+    width: 65.3rem;
+  }
+
+  >button {
+    width: 4rem;
+  }
+}
+
+.labelRequired {
+  &::before {
+    content: "*";
+  }
+}
+
+.recipientInputField {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+
+  >label {
+    width: 6.56rem;
+  }
+
+  >input {
+    width:57rem;
+  }
+}

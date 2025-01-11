@@ -3,6 +3,8 @@ import "./RecentMailTab.css";
 
 const RecentMailTab = ({ mails, onMailClick }) => {
   const [activeTab, setActiveTab] = useState("all");
+  const sentCount = mails.filter((mail) => mail.state === "SENT").length;
+  const savedCount = mails.filter((mail) => mail.state === "SAVED").length;
 
   // 필터링
   const filteredMails = mails.filter((mail) => {
@@ -12,26 +14,26 @@ const RecentMailTab = ({ mails, onMailClick }) => {
 
   return (
     <div id="recentMailTab">
-      <span className="recentMailTitle">Recent Mail</span>
       {/* Tab Navigation */}
       <div className="tabMenu">
         <button
           className={`tabButton ${activeTab === "all" ? "activeTab" : ""}`}
           onClick={() => setActiveTab("all")}
         >
-          전체
+          전체({mails.length})
         </button>
         <button
-          className={`tabButton ${activeTab === "sent" ? "activeTab" : ""}`}
-          onClick={() => setActiveTab("sent")}
+          className={`tabButton ${activeTab === "SENT" ? "activeTab" : ""}`}
+          style={{ marginLeft: '-1rem'}}
+          onClick={() => setActiveTab("SENT")}
         >
-          전송 이메일
+          보낸 이메일({sentCount})
         </button>
         <button
-          className={`tabButton ${activeTab === "saved" ? "activeTab" : ""}`}
-          onClick={() => setActiveTab("saved")}
+          className={`tabButton ${activeTab === "SAVED" ? "activeTab" : ""}`}
+          onClick={() => setActiveTab("SAVED")}
         >
-          저장된 이메일
+          저장한 이메일({savedCount})
         </button>
       </div>
 
@@ -44,21 +46,25 @@ const RecentMailTab = ({ mails, onMailClick }) => {
           >
             <div className="mailItemLeft">
               <div className="mailItemLeftTop">
-                <span>{mail.state}</span>
+                <span
+                  className={`mailItemState ${mail.state}`}
+                >
+                  {mail.state === "SAVED" ? "보관" : "전송"}
+                </span>
               </div>
               <div className="mailItemLeftBottom">
-                <span>{mail.title}</span>
-                <span>{mail.date}</span>
+                <span className="mailItemTitle">{mail.generatedTitle}</span>
+                <span className="mailItemDate">{mail.createAt}</span>
               </div>
             </div>
-            <div className="mailItemRight">
+            <button className="mailItemRight">
               <div className="mailItemTo">
-                <span>{mail.recipientName}</span>
+                <span>To. {mail.recipientEmail}</span>
               </div>
               <div className="mailItemButton">
-                <button>&gt;</button>
+                <span><b>&gt;</b></span>
               </div>
-            </div>
+            </button>
           </div>
         ))}
         {filteredMails.length === 0 && <p>메일이 없습니다.</p>}

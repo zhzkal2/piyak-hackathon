@@ -11,6 +11,7 @@ function RecipientInputField({ label, type, value, required, onChange }) {
         value={value}
         required={required}
         onChange={onChange}
+        placeholder={`${label}을 입력해주세요`}
       />
     </div>
   );
@@ -58,20 +59,22 @@ export default function Form2Picker() {
         <span>상대방은 누구인가요?</span>
       </title>
       <section>
-        <RecipientInputField
-          label="이름"
-          type="text"
-          value={recipientData.recipientName}
-          required={true}
-          onChange={(e) => handleChange("recipientName", e.target.value)}
-        />
-        <RecipientInputField
-          label="메일주소"
-          type="email"
-          value={recipientData.recipientMail}
-          required={true}
-          onChange={(e) => handleChange("recipientMail", e.target.value)}
-        />
+        <div>
+          <RecipientInputField
+            label="이름"
+            type="text"
+            value={recipientData.recipientName}
+            required={true}
+            onChange={(e) => handleChange("recipientName", e.target.value)}
+          />
+          <RecipientInputField
+            label="메일주소"
+            type="email"
+            value={recipientData.recipientMail}
+            required={true}
+            onChange={(e) => handleChange("recipientMail", e.target.value)}
+          />
+        </div>
       </section>
     </div>
   );

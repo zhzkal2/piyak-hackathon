@@ -56,18 +56,20 @@ GDG Campus Korea입니다.
 
   return (
     <div className="form4-picker-container">
-      <div>
+      <div className="left-section">
         <h3>AI가 만든 이메일 결과</h3>
 
         <div className="generated-email">
-          <div className="email-title">
+          <div>
             <strong>{generatedData.generatedTitle}</strong>
           </div>
           <p className="recipient">
             받는 사람 <span>{generatedData.recipientMail}</span>
           </p>
-          <div className="email-content">
-            <pre>{generatedData.generatedContent}</pre>
+          <div className="generated-content">
+            {generatedData.generatedContent.split("\n").map((line, index) => (
+              <p key={index}>{line}</p>
+            ))}
           </div>
         </div>
       </div>
@@ -75,7 +77,7 @@ GDG Campus Korea입니다.
       <div className="right-section">
         <h4>추가 요청, 변경 사항</h4>
         <textarea
-          placeholder="요청 사항이나 변경 사항을 입력해주세요..."
+          placeholder="요청 사항이나 변경 사항을 입력해주세요"
           className="feedback-textarea"
         ></textarea>
 

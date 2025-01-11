@@ -1,4 +1,4 @@
-package com.example.backend.login.service;
+package com.example.backend.user.service;
 
 import java.util.HashMap;
 import java.util.Map;

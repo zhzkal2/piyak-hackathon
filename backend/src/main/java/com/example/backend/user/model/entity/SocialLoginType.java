@@ -1,4 +1,4 @@
-package com.example.backend.login.model.entity;
+package com.example.backend.user.model.entity;
 
 public enum SocialLoginType {
     GOOGLE,

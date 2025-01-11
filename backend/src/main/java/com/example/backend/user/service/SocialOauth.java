@@ -1,6 +1,6 @@
-package com.example.backend.login.service;
+package com.example.backend.user.service;
 
-import com.example.backend.login.model.entity.SocialLoginType;
+import com.example.backend.user.model.entity.SocialLoginType;
 
 public interface SocialOauth { //소셜 로그인 타입별로 공통적으로 사용될 interface
     /**

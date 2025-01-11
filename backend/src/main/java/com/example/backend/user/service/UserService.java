@@ -18,7 +18,6 @@ public class UserService {
         User user = new User();
         user.setName("이예림");
         user.setEmail("1117mg@sookmyung.ac.kr");
-        user.setPhoneNum("010-2243-9867");
 
         UserAffiliation affiliation1 = new UserAffiliation();
         affiliation1.setAffiliation("숙명여자대학교");

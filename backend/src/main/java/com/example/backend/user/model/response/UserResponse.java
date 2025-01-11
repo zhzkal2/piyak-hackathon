@@ -1,4 +1,4 @@
-package com.example.backend.login.model.response;
+package com.example.backend.user.model.response;
 
 import lombok.Getter;
 import lombok.Setter;

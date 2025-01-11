@@ -1,10 +1,11 @@
 package com.example.backend.folders.model.request;
 
-import com.example.backend.mail.model.request.EmailRequest;
 import lombok.Data;
+import lombok.Setter;
 
 @Data
-public class RequestData extends EmailRequest {
+@Setter
+public class RequestData {
 
     private Form1 form1;
     private Form2 form2;

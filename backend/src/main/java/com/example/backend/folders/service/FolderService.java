@@ -1,7 +1,6 @@
 package com.example.backend.folders.service;
 
 
-import com.example.backend.folders.model.entity.SendToEmailDTO;
 import com.example.backend.folders.model.repository.FolderRepository;
 import com.example.backend.folders.model.request.RequestData;
 import com.example.backend.mail.model.request.EmailRequest;
@@ -15,8 +14,6 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class FolderService {
 
-    private final FolderRepository folderRepository;
-    private final EmailService emailService;
     private final ChatGptService chatGptService;
 
     public void splitData(RequestData requestData) {
@@ -27,33 +24,14 @@ public class FolderService {
         EmailRequest emailRequest = convertToSendToEmailDTO(requestData);
         EmailResponse response = chatGptService.generateEmail(emailRequest);
 
-
     }
 
     private EmailRequest convertToSendToEmailDTO(RequestData requestData) {
-        EmailRequest sendToEmailDTO = new EmailRequest();
+        EmailRequest emailRequest = new EmailRequest();
 
-        EmailRequest.Form1 form1 = new EmailRequest.Form1();
-        form1.setName(requestData.getForm1().getName());
-        form1.setJob(requestData.getForm1().getJob());
-        form1.setAffiliation(requestData.getForm1().getAffiliation());
-        form1.setNumber(requestData.getForm1().getNumber());
-        sendToEmailDTO.setForm1(form1); // set Form1 data
+        emailRequest.getForm1().setName(requestData.getForm1().getName());
 
-        EmailRequest.Form2 form2 = new EmailRequest.Form2();
-        form2.setRecipientName(requestData.getForm2().getRecipientName());
-        form2.setRecipientMail(requestData.getForm2().getRecipientMail());
-        form2.setFileToSend(requestData.getForm2().getFileToSend());
-        sendToEmailDTO.setForm2(form2);
-
-        EmailRequest.Form3 form3 = new EmailRequest.Form3();
-        form3.setSituation(requestData.getForm3().getSituation());
-        form3.setDesiredAnswer(requestData.getForm3().getDesiredAnswer());
-        form3.setTone(requestData.getForm3().getTone());
-        sendToEmailDTO.setForm3(form3);
-
-        // 최종적으로 변환된 객체 반환
-        return sendToEmailDTO;
+        return emailRequest;
     }
 
 

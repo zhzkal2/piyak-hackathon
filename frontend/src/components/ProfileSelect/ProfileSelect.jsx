@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import useProfileStore from "@/hooks/useProfileStore";
 import "./ProfileSelect.css";
 
@@ -20,8 +20,17 @@ export default function ProfileSelect() {
     email: false,
   }); // 선택된 항목 저장
 
+  // LocalStorage에서 데이터 가져오기
+  useEffect(() => {
+    const savedData = JSON.parse(localStorage.getItem("save-form1"));
+    if (savedData) {
+      setSelectedProfile((prev) => ({ ...prev, ...savedData }));
+    }
+  }, []);
+
   const handleSelectProfile = (profile) => {
     setSelectedProfile(profile); // 선택된 프로필 업데이트
+    localStorage.removeItem("save-form1"); // LocalStorage에서 save-form1 삭제
   };
 
   const handleCheckboxChange = (field) => {
@@ -38,7 +47,7 @@ export default function ProfileSelect() {
         dataToSave[key] = selectedProfile[key]; // 선택된 항목만 저장
       }
     });
-    localStorage.setItem("selectedProfile", JSON.stringify(dataToSave));
+    localStorage.setItem("save-form1", JSON.stringify(dataToSave));
     alert("선택된 항목이 저장되었습니다.");
   };
 
@@ -50,7 +59,16 @@ export default function ProfileSelect() {
           profiles.map((profile, index) => (
             <div
               key={index}
-              onClick={() => handleSelectProfile(profile)} // 클릭 시 선택된 프로필 업데이트
+              onClick={() => handleSelectProfile(profile)} // 클릭 시 선택된 프로필 업데이트 및 LocalStorage 초기화
+              style={{
+                cursor: "pointer",
+                border: "1px solid #ccc",
+                padding: "10px",
+                margin: "10px 0",
+                borderRadius: "10px",
+                backgroundColor:
+                  selectedProfile === profile ? "#f0f0f0" : "#fff",
+              }}
             >
               <p>
                 <strong>이름:</strong> {profile.name || "정보 없음"}

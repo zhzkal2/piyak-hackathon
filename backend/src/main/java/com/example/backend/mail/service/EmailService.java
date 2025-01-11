@@ -19,17 +19,17 @@ public class EmailService {
     private final EmailResponseRepository emailResponseRepository;
 
     // 모든 메일 응답 조회
-    public List<EmailResponse> getAllEmails(String recipientMail) {
-        return emailResponseRepository.findAllByRecipientMail(recipientMail);
+    public List<EmailResponse> getAllEmails() {
+        return emailResponseRepository.findAllByRecipientMail();
     }
 
     // 저장된 메일 응답 조회
-    public List<EmailResponse> getSavedEmails(String recipientMail) {
-        return emailResponseRepository.findByRecipientMailAndState(recipientMail, EmailState.SAVED);
+    public List<EmailResponse> getSavedEmails() {
+        return emailResponseRepository.findByRecipientMailAndState(EmailState.SAVED);
     }
 
     // 전송된 메일 응답 조회
     public List<EmailResponse> getSentEmails(String recipientMail) {
-        return emailResponseRepository.findByRecipientMailAndState(recipientMail, EmailState.SENT);
+        return emailResponseRepository.findByRecipientMailAndState(EmailState.SENT);
     }
 }

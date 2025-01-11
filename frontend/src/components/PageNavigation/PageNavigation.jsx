@@ -6,6 +6,7 @@ export default function PageNavigation({
   totalPages,
   onNext,
   onPrevious,
+  data,
 }) {
   return (
     <div className="navigation-container">

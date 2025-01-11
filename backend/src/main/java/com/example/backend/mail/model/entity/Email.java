@@ -9,7 +9,6 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Entity
-@Table(name = "emails")
 public class Email {
 
     @Id

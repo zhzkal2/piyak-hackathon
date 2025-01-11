@@ -19,67 +19,23 @@ import org.json.JSONObject;
 public class ChatGptService {
 
     private final EmailResponseRepository emailResponseRepository;
-    private static final String API_URL = "";
+    private static final String API_URL = "https://api.openai.com/v1/chat/completions";
 
-     @Value("${openai.api.key}")
-     private String apiKey;
+    @Value("${openai.api.key}")
+    private String apiKey;
 
     public EmailResponse generateEmail(EmailRequest emailRequest) {
-        RestTemplate restTemplate = new RestTemplate();
-
-        // 요청 헤더 설정
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.setBearerAuth(apiKey);
-        log.info("Using OpenAI API Key: {}", apiKey);
-
-        // ChatGPT 프롬프트 생성
         String prompt = createPrompt(emailRequest);
+        String content = sendChatGptRequest(prompt, "You are an email assistant.", 500);
+        String title = createTitle(emailRequest);
 
-        // 요청 본문
-        JSONObject requestBody = new JSONObject();
-        requestBody.put("model", "gpt-4o-mini-2024-07-18");
-        requestBody.put("messages", new JSONArray()
-                .put(new JSONObject().put("role", "system").put("content", "You are an email assistant."))
-                .put(new JSONObject().put("role", "user").put("content", prompt))
-        );
-        requestBody.put("max_tokens", 500);
+        EmailResponse emailResponse = new EmailResponse();
+        emailResponse.setGeneratedTitle(title);
+        emailResponse.setGeneratedContent(content);
+        emailResponse.setRecipientMail(emailRequest.getForm2().getRecipientMail());
 
-        HttpEntity<String> entity = new HttpEntity<>(requestBody.toString(), headers);
-
-        try {
-            // ChatGPT API 호출
-            ResponseEntity<String> response = restTemplate.exchange(API_URL, HttpMethod.POST, entity, String.class);
-
-            // 결과 반환
-            JSONObject responseBody = new JSONObject(response.getBody());
-            String content = responseBody.getJSONArray("choices")
-                    .getJSONObject(0)
-                    .getJSONObject("message")
-                    .getString("content");
-
-            // 제목 생성
-            String title = createTitle(emailRequest);
-
-            // EmailResponse 객체 생성
-            EmailResponse emailResponse = new EmailResponse();
-            emailResponse.setGeneratedTitle(title);
-            emailResponse.setGeneratedContent(content);
-
-            // DB에 저장
-            emailResponseRepository.save(emailResponse);
-
-            // 저장된 응답 반환
-            return emailResponse;
-
-        } catch (HttpClientErrorException e) {
-            log.error("HTTP Status: {}", e.getStatusCode());
-            log.error("Response Body: {}", e.getResponseBodyAsString());
-            log.error("Request Headers: {}", headers);
-            log.error("Request Body: {}", requestBody.toString());
-
-            throw new RuntimeException("Failed to generate email. Please try again later.");
-        }
+        emailResponseRepository.save(emailResponse);
+        return emailResponse;
     }
 
     public EmailResponse getEmailResponseById(Long id) {
@@ -88,14 +44,17 @@ public class ChatGptService {
     }
 
     private String createPrompt(EmailRequest emailRequest) {
+        String etiquetteGuidance = getEtiquetteGuidance(emailRequest.getLanguage());
         return String.format(
-                "Create a professional email for the following situation:\n" +
+                "Create a professional email in %s language following this etiquette: %s\n" +
                         "From: %s (%s, %s, %s)\n" +
                         "To: %s (%s)\n" +
                         "Situation: %s\n" +
                         "Expected Reply: %s\n" +
                         "Tone: %s" +
-                        "The email should avoid including any subject line or additional metadata.",
+                        "The email should avoid including any subject line or additional metadata, or sender's phone number.",
+                emailRequest.getLanguage(),
+                etiquetteGuidance,
                 emailRequest.getForm1().getName(),
                 emailRequest.getForm1().getAffiliation(),
                 emailRequest.getForm1().getNumber(),
@@ -109,9 +68,67 @@ public class ChatGptService {
     }
 
     private String createTitle(EmailRequest emailRequest) {
-        return String.format("[%s] %s",
+        String originalTitle = String.format(
+                "[%s] %s",
                 emailRequest.getForm1().getAffiliation(),
                 emailRequest.getForm3().getSituation()
         );
+        String translatedTitle = sendChatGptRequest(
+                String.format("Translate the following title into %s. Only return the translated title without any additional explanation or prefix: \"%s\"",
+                        emailRequest.getLanguage(), originalTitle),
+                "You are a professional translator.",
+                100
+        );
+        return translatedTitle.trim();
+    }
+
+    private String getEtiquetteGuidance(String language) {
+        switch (language.toLowerCase()) {
+            case "english":
+                return "Please compose the email in English only.";
+            case "korean":
+                return "이메일을 한국어로만 작성해주세요.";
+            case "japanese":
+                return "メールを日本語でのみ作成してください。";
+            case "chinese":
+                return "请仅使用中文撰写邮件。";
+            case "french":
+                return "Veuillez rédiger l'email uniquement en français.";
+            case "german":
+                return "Bitte verfassen Sie die E-Mail ausschließlich auf Deutsch.";
+            default:
+                return "Please compose the email in the specified language only.";
+        }
+    }
+
+    private String sendChatGptRequest(String prompt, String systemMessage, int maxTokens) {
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setBearerAuth(apiKey);
+
+        JSONObject requestBody = new JSONObject();
+        requestBody.put("model", "gpt-4o-mini-2024-07-18");
+        requestBody.put("messages", new JSONArray()
+                .put(new JSONObject().put("role", "system").put("content", systemMessage))
+                .put(new JSONObject().put("role", "user").put("content", prompt))
+        );
+        requestBody.put("max_tokens", maxTokens);
+
+        HttpEntity<String> entity = new HttpEntity<>(requestBody.toString(), headers);
+
+        try {
+            ResponseEntity<String> response = restTemplate.exchange(API_URL, HttpMethod.POST, entity, String.class);
+            JSONObject responseBody = new JSONObject(response.getBody());
+            return responseBody.getJSONArray("choices")
+                    .getJSONObject(0)
+                    .getJSONObject("message")
+                    .getString("content")
+                    .trim();
+        } catch (HttpClientErrorException e) {
+            log.error("HTTP Status: {}", e.getStatusCode());
+            log.error("Response Body: {}", e.getResponseBodyAsString());
+            throw new RuntimeException("Failed to process request. Please try again later.");
+        }
     }
 }

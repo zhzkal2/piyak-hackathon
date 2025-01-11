@@ -1,10 +1,12 @@
 package com.example.backend.folders.model.request;
 
 import lombok.Data;
+import lombok.Getter;
 import lombok.Setter;
 
 @Data
 @Setter
+@Getter
 public class RequestData {
 
     private Form1 form1;

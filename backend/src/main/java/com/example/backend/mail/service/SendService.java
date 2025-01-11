@@ -1,47 +1,43 @@
 package com.example.backend.mail.service;
 
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
+import jakarta.mail.Authenticator;
+import jakarta.mail.MessagingException;
+import jakarta.mail.PasswordAuthentication;
+import jakarta.mail.Session;
+
+import java.util.Properties;
 import org.springframework.stereotype.Service;
 
-import jakarta.mail.MessagingException;
-import jakarta.mail.internet.MimeMessage;
-import java.util.Random;
+
 
 @Service
 public class SendService {
 
-    private final JavaMailSender javaMailSender;
+    public void sendEmail(String accessToken, String recipient, String subject) throws MessagingException {
+        // SMTP 서버 설정
+        Properties props = new Properties();
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.port", "587");
 
-    // 생성자 주입
-    public SendService(JavaMailSender javaMailSender) {
-        this.javaMailSender = javaMailSender;
-    }
+        // 세션 생성
+        Session session = Session.getInstance(props, new Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                // Gmail SMTP 사용자와 엑세스 토큰 사용
+                return new PasswordAuthentication("your-email@gmail.com", accessToken);
+            }
+        });
 
-    private String createCode() {
-        Random random = new Random();
-        int code = 100000 + random.nextInt(900000);  // 6자리 랜덤 숫자
-        return String.valueOf(code);
-    }
+        // 이메일 작성
+//        Message message = new MimeMessage(session);
+//        message.setFrom(new InternetAddress("your-email@gmail.com")); // 보내는 사람
+//        message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipient)); // 받는 사람
+//        message.setSubject(subject); // 제목
+//        message.setText(body); // 내용
 
-    public String sendEmail(String recipient, String subject, String body) {
-        String code = createCode();  // 인증 코드 생성
-
-        try {
-            MimeMessage message = javaMailSender.createMimeMessage();
-            MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(message, false, "UTF-8");
-            mimeMessageHelper.setTo(recipient);
-            mimeMessageHelper.setSubject(subject);
-
-            // 인증 이메일 내용 생성
-
-
-            mimeMessageHelper.setText(body, true);  // HTML 형식으로 전송
-            javaMailSender.send(message);  // 이메일 전송
-        } catch (MessagingException e) {
-            throw new RuntimeException("이메일 전송 실패", e);
-        }
-
-        return code;  // 인증 코드 반환
+        // 이메일 전송
+//        Transport.send(message);
     }
 }

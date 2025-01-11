@@ -14,7 +14,7 @@ import org.springframework.web.client.RestTemplate;
 public class GoogleOAuthService {
 
     private final String CLIENT_ID = "465363714590-fdj341f8gn053o407767b6g0n0toohrp.apps.googleusercontent.com";
-    private final String CLIENT_SECRET = "${GOOGLE.CLIENT.SECRET}";
+    private final String CLIENT_SECRET = null;
     private final String REDIRECT_URI = "http://localhost:8080/auth/google/callback";
 
     public String getAccessToken(String authorizationCode) {

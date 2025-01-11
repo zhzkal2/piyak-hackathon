@@ -56,20 +56,22 @@ export default function SendMail() {
 
   return (
     <div className="send-mail-container">
-      <div className="send-mail-header">
-        <span>메일 보내기</span>
+      <div className="send-mail-wrapper">
+        <div className="send-mail-header">
+          <span>메일 보내기</span>
+        </div>
+        <div className="send-mail-progress-bar-container">
+          {renderTitle()}
+          <ProgressBar currentPage={currentPage} totalPages={totalPages} />
+        </div>
+        <div className="send-mail-content-box">{renderPage()}</div>
+        <PageNavigation
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onNext={handleNext}
+          onPrevious={handlePrevious}
+        />
       </div>
-      <div className="send-mail-progress-bar-container">
-        {renderTitle()}
-        <ProgressBar currentPage={currentPage} totalPages={totalPages} />
-      </div>
-      <div className="send-mail-content-box">{renderPage()}</div>
-      <PageNavigation
-        currentPage={currentPage}
-        totalPages={totalPages}
-        onNext={handleNext}
-        onPrevious={handlePrevious}
-      />
     </div>
   );
 }

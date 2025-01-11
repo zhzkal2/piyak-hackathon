@@ -1,0 +1,27 @@
+.navigation-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.navigation-button {
+  padding: 10px 20px;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, cursor 0.3s ease;
+}
+
+.button-active {
+  background-color: #4caf50;
+}
+
+.button-active:hover {
+  background-color: #45a049;
+}
+
+.button-disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}

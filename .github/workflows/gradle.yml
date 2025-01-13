@@ -36,7 +36,7 @@ jobs:
         run: echo "${{ secrets.APPLICATION }}" > backend/src/main/resources/application.yml
 
       - name: Check if application.yml exists
-        run: cat src/main/resources/application.yml
+        run: cat backend/src/main/resources/application.yml
 
       - name: Check if gradlew exists
         run: |

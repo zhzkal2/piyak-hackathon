@@ -42,8 +42,9 @@ jobs:
 
       # 4. Spring Boot 애플리케이션 빌드
       - name: Build with Gradle
-        run: ./backend clean bootJar
-        working-directory: ./backend
+        run: |
+          cd backend
+          ./gradlew clean bootJar
 
 
 

@@ -31,6 +31,8 @@ jobs:
       - name: create resources folder if not exists
         run: mkdir -p backend/src/main/resources
 
+      - name: Check if application.yml exists
+        run: cat src/main/resources/application.yml
       - name: set up application.properties
         run: echo "${{ secrets.APPLICATION }}" > backend/src/main/resources/application.yml
 

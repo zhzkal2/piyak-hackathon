@@ -34,6 +34,12 @@ jobs:
       - name: set up application.properties
         run: echo "${{ secrets.APPLICATION }}" > backend/src/main/resources/application.yml
 
+      - name: Check if gradlew exists
+        run: |
+          echo "Checking backend directory..."
+          ls -l ./backend/
+          ls -l ./backend/gradlew
+
       # 4. Spring Boot 애플리케이션 빌드
       - name: Build with Gradle
         run: ./backend clean bootJar

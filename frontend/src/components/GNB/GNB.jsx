@@ -2,9 +2,7 @@ import { useNavigate } from "react-router-dom";
 import "./GNB.css";
 import EditIcon from "@/image/gnbEdit.svg";
 import HomeIcon from "@/image/gnbHome.svg";
-import MailIcon from "@/image/gnbMail.svg";
 import ProfileIcon from "@/image/gnbProfile.svg";
-import SendIcon from "@/image/gnbSend.svg";
 
 const GNB = () => {
   const navigate = useNavigate();
@@ -27,14 +25,6 @@ const GNB = () => {
             <img src={EditIcon} alt="Profile" />
             <span>메일 보내기</span>
           </button>
-          <button className="gnbBtn" onClick={() => navigate("storage")}>
-            <img src={ProfileIcon} alt="Edit" />
-            <span>보관함</span>
-          </button>
-          {/* <button className="gnbBtnLarge" onClick={() => navigate("send-mail")}>
-            <img src={SendIcon} alt="Send" />
-            <span>메일 보내기</span>
-          </button> */}
         </div>
       </div>
     </div>

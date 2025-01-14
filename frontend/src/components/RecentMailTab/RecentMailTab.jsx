@@ -8,9 +8,9 @@ const RecentMailTab = ({ mails, onMailClick }) => {
 
   // 필터링
   const filteredMails = mails.filter((mail) => {
-    if(activeTab === "all") return true;
+    if (activeTab === "all") return true;
     return mail.state === activeTab;
-  })
+  });
 
   return (
     <div id="recentMailTab">
@@ -24,7 +24,7 @@ const RecentMailTab = ({ mails, onMailClick }) => {
         </button>
         <button
           className={`tabButton ${activeTab === "SENT" ? "activeTab" : ""}`}
-          style={{ marginLeft: '-1rem'}}
+          style={{ marginLeft: "-1rem" }}
           onClick={() => setActiveTab("SENT")}
         >
           보낸 이메일({sentCount})
@@ -40,15 +40,10 @@ const RecentMailTab = ({ mails, onMailClick }) => {
       {/* mail list */}
       <div className="mailList">
         {filteredMails.map((mail) => (
-          <div 
-            className="mailItem"
-            onClick={() => onMailClick(mail)}
-          >
+          <div className="mailItem" onClick={() => onMailClick(mail)}>
             <div className="mailItemLeft">
               <div className="mailItemLeftTop">
-                <span
-                  className={`mailItemState ${mail.state}`}
-                >
+                <span className={`mailItemState ${mail.state}`}>
                   {mail.state === "SAVED" ? "보관" : "전송"}
                 </span>
               </div>
@@ -62,7 +57,9 @@ const RecentMailTab = ({ mails, onMailClick }) => {
                 <span>To. {mail.recipientEmail}</span>
               </div>
               <div className="mailItemButton">
-                <span><b>&gt;</b></span>
+                <span>
+                  <b>&gt;</b>
+                </span>
               </div>
             </button>
           </div>
@@ -70,7 +67,7 @@ const RecentMailTab = ({ mails, onMailClick }) => {
         {filteredMails.length === 0 && <p>메일이 없습니다.</p>}
       </div>
     </div>
-  )
+  );
 };
 
 export default RecentMailTab;

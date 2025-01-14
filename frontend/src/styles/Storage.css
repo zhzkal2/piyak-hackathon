@@ -1,6 +1,6 @@
 #storage {
   width: 100%;
-  background: #F2F8F8;
+  background: #f2f8f8;
 }
 
 .storageContainer {
@@ -18,13 +18,12 @@
   margin-top: 1.3rem;
   font-size: 0.85rem;
 
-  >img {
+  > img {
     margin-right: 1rem;
   }
 
-  >span {
+  > span {
     font-size: 0.85rem;
     font-weight: 700;
   }
-
 }

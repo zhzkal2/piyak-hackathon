@@ -19,7 +19,7 @@ export default function Storage() {
       generateContent: "lorem ipsum dolor sit amet",
       createAt: "2025-01-01",
       recipientEmail: "kim@example.com",
-      state: "SAVED"
+      state: "SAVED",
     },
     {
       id: 2,
@@ -27,7 +27,7 @@ export default function Storage() {
       generateContent: "lorem ipsum dolor sit amet",
       createAt: "2025-01-01",
       recipientEmail: "kim@example.com",
-      state: "SAVED"
+      state: "SAVED",
     },
     {
       id: 3,
@@ -35,7 +35,7 @@ export default function Storage() {
       generateContent: "lorem ipsum dolor sit amet",
       createAt: "2025-01-01",
       recipientEmail: "kim@example.com",
-      state: "SAVED"
+      state: "SAVED",
     },
     {
       id: 4,
@@ -43,7 +43,7 @@ export default function Storage() {
       generateContent: "lorem ipsum dolor sit amet",
       createAt: "2025-01-01",
       recipientEmail: "kim@example.com",
-      state: "SAVED"
+      state: "SAVED",
     },
     {
       id: 5,
@@ -51,7 +51,7 @@ export default function Storage() {
       generateContent: "lorem ipsum dolor sit amet",
       createAt: "2025-01-01",
       recipientEmail: "kim@example.com",
-      state: "SENT"
+      state: "SENT",
     },
     {
       id: 6,
@@ -59,8 +59,8 @@ export default function Storage() {
       generateContent: "lorem ipsum dolor sit amet",
       createAt: "2025-01-01",
       recipientEmail: "kim@example.com",
-      state: "SENT"
-    }
+      state: "SENT",
+    },
   ];
 
   const handleMailClick = (mail) => {
@@ -98,5 +98,5 @@ export default function Storage() {
         )}
       </div>
     </div>
-  )
-};
+  );
+}

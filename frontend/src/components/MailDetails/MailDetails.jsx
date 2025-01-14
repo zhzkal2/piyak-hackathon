@@ -12,7 +12,7 @@ const MailDetails = ({ mail }) => {
     sendForm(mail);
     alert("메일 저장 완료");
     navigate("/");
-  }
+  };
 
   return (
     <div id="mailDetailContainer">
@@ -43,9 +43,7 @@ const MailDetails = ({ mail }) => {
         <div className="mailDetailRecipient">
           <span>To. {mail.recipientEmail}</span>
         </div>
-        <div className="mailDetailDate">
-          {mail.createAt}
-        </div>
+        <div className="mailDetailDate">{mail.createAt}</div>
         <div className="mailDetailEdit">
           <div className="mailDetailFrom">
             {/* <span><b>From. {name}</b></span> */}
@@ -61,13 +59,21 @@ const MailDetails = ({ mail }) => {
         <div className="mailDetailRequest">
           <span>*직접 적은 요청사항입니다.</span>
         </div>
-        <div className={`mailDetailButtonBox ${mail.state === "SAVED" ? "" : "none"}`}>
-          <button className="mailDetailButton" onClick={handleSubmit}>저장</button>
-          <button className="mailDetailButton" onClick={handleSubmit}>메일 보내기</button>
+        <div
+          className={`mailDetailButtonBox ${
+            mail.state === "SAVED" ? "" : "none"
+          }`}
+        >
+          <button className="mailDetailButton" onClick={handleSubmit}>
+            저장
+          </button>
+          <button className="mailDetailButton" onClick={handleSubmit}>
+            메일 보내기
+          </button>
         </div>
       </div>
     </div>
   );
-}
+};
 
 export default MailDetails;

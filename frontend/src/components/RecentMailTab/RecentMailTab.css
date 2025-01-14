@@ -17,7 +17,7 @@
   width: 100%;
   background-color: white;
   border-radius: 0.625rem 0.625rem 0rem 0rem;
-  box-shadow: 4px 4px 10px 0px rgba(215, 215, 215, 0.10);
+  box-shadow: 4px 4px 10px 0px rgba(215, 215, 215, 0.1);
 }
 
 .tabButton {
@@ -31,11 +31,11 @@
   align-items: center;
   justify-content: center;
   background-color: white;
-  color: #878D96;
+  color: #878d96;
   border-radius: 0.625rem 0.625rem 0rem 0rem;
 
   &.activeTab {
-    color: #45E987;
+    color: #45e987;
   }
 }
 
@@ -70,7 +70,7 @@
 .mailItemTitle {
   font-size: 1rem;
   font-weight: 700;
-} 
+}
 
 .mailItemRight {
   height: 2.4rem;
@@ -79,7 +79,7 @@
   justify-content: center;
   align-items: center;
   border: none;
-  background-color: #F2F4F8;
+  background-color: #f2f4f8;
   display: flex;
   gap: 1rem;
 }
@@ -87,7 +87,7 @@
 .mailList {
   display: flex;
   flex-direction: column;
-  background-color: #D4F7F9;
+  background-color: #d4f7f9;
   padding: 1rem;
 
   /* height: 20rem; */
@@ -108,7 +108,7 @@
 .mailItemState {
   width: 2.7rem;
   height: fit-content;
-  background-color: #F2F4F8;
+  background-color: #f2f4f8;
   border-radius: 0.25rem;
   display: flex;
   align-items: center;
@@ -119,11 +119,11 @@
   font-weight: 700;
 
   &.SAVED {
-    color: #45E987
+    color: #45e987;
   }
 
   &.SENT {
-    color: #45E1E9
+    color: #45e1e9;
   }
 }
 

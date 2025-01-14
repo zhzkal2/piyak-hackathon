@@ -50,6 +50,10 @@ export default function Form3Picker({ handleNext }) {
       const form2 = JSON.parse(localStorage.getItem("save-form2")) || {};
       const form3 = JSON.parse(localStorage.getItem("save-form3")) || {};
 
+      if (form3.situation) {
+        form3.situation = form3.situation.replace(/\n/g, " ");
+      }
+
       // 최종 JSON 구조 생성
       const finalForm = {
         form1,

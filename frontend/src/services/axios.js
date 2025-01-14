@@ -1,8 +1,29 @@
 import axiosInstance from "./axiosConfig";
 
+// 소셜 로그인 API 호출
+export const socialLogin = async (socialLoginType) => {
+  const response = await axiosInstance.get(`/auth/${socialLoginType}`);
+  const { status, data } = response;
+  console.log(data);
+  return { status, data };
+};
+
+// 소셜 로그인 콜백 API 호출
+export const socialLoginCallback = async ({ socialLoginType, code }) => {
+  const response = await axiosInstance.get(
+    `/auth/${socialLoginType}/callback`,
+    {
+      code,
+    }
+  );
+  const { status, data } = response;
+  console.log(data);
+  return { status, data };
+};
+
 // AI에게 내용 보내기
 export const sendForm = async ({ form }) => {
-  const response = await axiosInstance.post(`/generate-mail`, { form });
+  const response = await axiosInstance.post(`api/generate-mail`, { form });
   const { status, data } = response;
   return { status, data };
 };

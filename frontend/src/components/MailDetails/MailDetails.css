@@ -24,7 +24,7 @@
   font-weight: 600;
   padding: 0.5rem 1.87rem;
 
-  >input {
+  > input {
     border: none;
     background-color: transparent;
     font-size: 1.5rem;
@@ -35,8 +35,8 @@
 
 .mailDetailRecipientEmail {
   margin: 1.19rem 0 0.75rem;
-  
-  >span {
+
+  > span {
     margin-left: 0.62rem;
     font-size: 1rem;
     font-weight: 500;
@@ -50,11 +50,11 @@
   height: 27rem;
   overflow-y: scroll;
   scrollbar-width: none;
-  background-color: #DDE1E6;
+  background-color: #dde1e6;
 
-  >textarea {
+  > textarea {
     border: none;
-    background-color: #DDE1E6;
+    background-color: #dde1e6;
     height: 100%;
     width: 100%;
     resize: none;
@@ -79,14 +79,14 @@
 .mailDetailRecipient {
   margin-bottom: 1.25rem;
   border-radius: 0.625rem;
-  border: 1px solid #E9E9E9;
-  background: #FFF;
+  border: 1px solid #e9e9e9;
+  background: #fff;
   display: flex;
   align-items: center;
   height: fit-content;
   padding: 1.25rem 0.86rem;
 
-  >span {
+  > span {
     font-size: 1rem;
     font-weight: 700;
   }
@@ -95,7 +95,7 @@
 .mailDetailStatus {
   width: 2.7rem;
   height: fit-content;
-  background-color: #F2F4F8;
+  background-color: #f2f4f8;
   border-radius: 0.25rem;
   display: flex;
   align-items: center;
@@ -106,26 +106,26 @@
   font-weight: 700;
 
   &.SAVED {
-    color: #45E987
+    color: #45e987;
   }
 
   &.SENT {
-    color: #45E1E9
+    color: #45e1e9;
   }
 }
 
 .mailDetailTitle {
   border: none;
-  background-color: #DDE1E6;
+  background-color: #dde1e6;
   font-size: 1rem;
   font-weight: 700;
   padding: 1rem;
 }
 
 .mailDetailEdit {
-  border-radius: 0.625rem;  
+  border-radius: 0.625rem;
   height: 11rem;
-  background-color: #FFF;
+  background-color: #fff;
   padding: 1.5rem;
 }
 
@@ -136,8 +136,8 @@
   margin-top: 1rem;
   margin-left: 2rem;
   justify-content: center;
-  
-  >span {
+
+  > span {
     margin-bottom: 0.7rem;
   }
 }
@@ -149,9 +149,9 @@
   scrollbar-width: none;
   margin-top: 1rem;
   padding: 1.5rem;
-  font-size: 1.15r  em;
+  font-size: 1.15r em;
   font-weight: 500;
-  background-color: #FFF;
+  background-color: #fff;
 }
 
 .mailDetailButtonBox {
@@ -169,7 +169,7 @@
   padding: 0.94rem 1.5rem;
   width: fit-content;
   border-radius: 2rem;
-  background-color: #45E1E9;
+  background-color: #45e1e9;
   border: none;
   font-weight: 500;
   font-size: 1rem;

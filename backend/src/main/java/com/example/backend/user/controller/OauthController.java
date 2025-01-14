@@ -57,6 +57,8 @@ public class OauthController {
             @RequestParam(name = "code") String code,
             HttpServletResponse response) throws IOException {
 
+        System.out.println(socialLoginType);
+
         log.info(">> 소셜 로그인 API 서버로부터 받은 code :: {}", code);
 
         // 액세스 토큰을 통해 사용자 정보를 받아온 후 저장

@@ -78,7 +78,7 @@ public class OauthController {
 
             // 로그인한 유저 정보를 response body로 반환
 //            return ResponseEntity.ok(new UserResponse(user.getName(), user.getAccessToken(), user.getProvider()));
-            String redirectUrl = "http://localhost:3000/profile";
+            String redirectUrl = "http://localhost:3000/profile?name=" + user.getName() + "&email=" + user.getEmail();
             response.sendRedirect(redirectUrl);
 
 

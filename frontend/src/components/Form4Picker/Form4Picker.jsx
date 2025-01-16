@@ -30,15 +30,15 @@ export default function Form4Picker() {
         return;
       }
 
+      const submitForm = {
+        accessToken,
+        recipient: generatedData.recipientMail,
+        subject: generatedData.generatedTitle,
+        body: generatedData.generatedContent,
+      };
+
       // 메일 전송 API 호출
-      const sendEmailResponse = await sendEmail({
-        form: {
-          accessToken,
-          recipient: generatedData.recipientMail,
-          subject: generatedData.generatedTitle,
-          body: generatedData.generatedContent,
-        },
-      });
+      const sendEmailResponse = await sendEmail(submitForm);
 
       console.log("sendEmail 응답:", sendEmailResponse);
 

@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import { socialLogin } from "@/services/axios";
+import useUserInfo from "@/hooks/useUserInfo";
 import { FcGoogle } from "react-icons/fc";
 import "./SocialLogin.css";
 
 export function SocialLogin() {
   const [isLoggedIn, setIsLoggedIn] = useState(false); // 로그인 상태 관리
+  const { setUserInfo } = useUserInfo();
 
   // 컴포넌트 마운트 시 쿠키를 통해 로그인 상태 확인
   useEffect(() => {
@@ -36,6 +38,7 @@ export function SocialLogin() {
     // 쿠키에서 access token 제거 (쿠키 만료 설정)
     document.cookie =
       "accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    setUserInfo(null, null);
     setIsLoggedIn(false); // 상태 초기화
   };
 

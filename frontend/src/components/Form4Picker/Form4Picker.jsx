@@ -26,7 +26,7 @@ export default function Form4Picker() {
         ?.split("=")[1];
 
       if (!accessToken) {
-        alert("AccessToken이 없습니다. 로그인 상태를 확인해주세요.");
+        alert("로그인 상태를 다시 확인해주세요.");
         return;
       }
 
@@ -43,7 +43,7 @@ export default function Form4Picker() {
       console.log("sendEmail 응답:", sendEmailResponse);
 
       if (sendEmailResponse.status === 200) {
-        alert("메일이 성공적으로 전송되었습니다!");
+        alert(`${generatedData.recipientMail}님께 메일이 전송되었습니다!`);
       } else {
         alert("메일 전송 중 문제가 발생했습니다.");
       }

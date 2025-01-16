@@ -68,7 +68,7 @@ export default function Form3Picker({ handleNext }) {
 
         // response.data를 로컬스토리지에 save-form4로 저장
         localStorage.setItem("save-form4", JSON.stringify(response.data));
-        alert("성공적으로 제출되었습니다! 데이터를 저장했습니다.");
+        alert("메일이 생성되었습니다!");
       } else {
         console.error("제출 중 오류 발생:", response);
         alert("제출 중 문제가 발생했습니다.");
